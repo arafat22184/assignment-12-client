@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import {
   FaChartLine,
@@ -66,6 +67,7 @@ const Featured = () => {
               whileHover={{
                 scale: 1.05,
                 boxShadow: "0px 4px 15px rgba(163, 230, 53, 0.3)",
+                transitionDuration: "0.14s",
               }}
               transition={{ type: "spring", stiffness: 300 }}
               className="bg-white/5 p-6 rounded-2xl border border-white/10 cursor-pointer"

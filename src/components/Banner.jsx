@@ -3,7 +3,7 @@ import { FaArrowRight } from "react-icons/fa";
 
 const Banner = () => {
   return (
-    <section className="relative h-[75vh] w-full overflow-hidden text-white">
+    <section className="relative h-[75vh] w-full overflow-hidden text-white border-b border-lime-950">
       {/* Video Background */}
       <video
         className="hidden lg:block absolute inset-0 w-full h-full object-cover"
