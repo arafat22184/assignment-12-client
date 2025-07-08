@@ -141,13 +141,13 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="fixed lg:top-4 left-0 right-0 z-50">
-      <div className=" lg:mx-auto max-w-screen-xl px-4 py-3 bg-white/10 backdrop-blur-sm lg:rounded-2xl shadow-md">
+    <nav className="fixed lg:top-3 left-0 right-0 z-50">
+      <div className=" lg:mx-auto max-w-screen-xl px-4 py-2 bg-white/10 backdrop-blur-sm lg:rounded-2xl shadow-md">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center">
             <img
-              className="w-32"
+              className="w-28"
               src="https://i.ibb.co/qS1WNFv/Fit-Forge-Logo.png"
               alt="FitForge Logo"
             />
