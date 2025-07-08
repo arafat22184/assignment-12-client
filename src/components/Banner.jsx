@@ -6,8 +6,16 @@ const Banner = () => {
     <section className="relative h-[85vh] w-full overflow-hidden text-white">
       {/* Video Background */}
       <video
-        className="absolute inset-0 w-full h-full object-cover"
-        src="https://cdn.pixabay.com/video/2023/01/27/148202-793717935_large.mp4" // Replace with your own video URL or local path
+        className="hidden lg:block absolute inset-0 w-full h-full object-cover"
+        src="https://res.cloudinary.com/ddckuxsjx/video/upload/v1751962948/148202-793717935_small_qrzugd.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+      <video
+        className="lg:hidden absolute inset-0 w-full h-full object-cover"
+        src="https://res.cloudinary.com/ddckuxsjx/video/upload/v1751962499/148208-793717949_small_aond6i.mp4"
         autoPlay
         loop
         muted
@@ -15,7 +23,7 @@ const Banner = () => {
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/15  z-10"></div>
+      <div className="absolute inset-0 bg-black/25  z-10"></div>
 
       {/* Content */}
       <div className="relative z-20 flex flex-col items-center justify-center text-center h-full px-4">
