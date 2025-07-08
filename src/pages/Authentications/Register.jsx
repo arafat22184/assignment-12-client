@@ -10,40 +10,33 @@ import {
   FaUserPlus,
 } from "react-icons/fa";
 import { Link } from "react-router";
-import { useState, useRef } from "react";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    photo: null,
-  });
-  const fileInputRef = useRef(null);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: files ? files[0] : value,
-    }));
+  const onSubmit = (data) => {
+    console.log("Form Data:", data);
   };
 
-  const handlePhotoClick = () => {
-    fileInputRef.current.click();
-  };
+  const selectedPhoto = watch("photo");
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-4 pt-20 lg:pt-0">
-      {/* Floating background elements */}
+    <section className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-4 pt-24">
+      {/* Background Blur Elements */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.1 }}
         transition={{ duration: 2 }}
         className="fixed inset-0 pointer-events-none"
       >
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-lime-400 blur-3xl"></div>
-        <div className="absolute bottom-1/3 right-1/3 w-80 h-80 rounded-full bg-emerald-500 blur-3xl"></div>
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-lime-400 blur-3xl" />
+        <div className="absolute bottom-1/3 right-1/3 w-80 h-80 rounded-full bg-emerald-500 blur-3xl" />
       </motion.div>
 
       <motion.div
@@ -52,47 +45,24 @@ const Register = () => {
         transition={{ duration: 0.6, type: "spring" }}
         className="w-full max-w-4xl grid grid-cols-1 lg:grid-cols-2 rounded-2xl overflow-hidden shadow-2xl border border-gray-800 backdrop-blur-sm"
       >
-        {/* Left Side - Branding */}
+        {/* Left Side */}
         <div className="bg-gradient-to-br from-lime-500 to-emerald-600 p-10 flex flex-col justify-center relative overflow-hidden">
-          {/* Top right circle */}
-          <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="absolute -top-18 -right-16 w-52 h-52 rounded-full bg-white/20"
-          ></motion.div>
-
-          {/* 3 circle top */}
-          <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="absolute bottom-4 right-8 md:right-32 lg:right-6 w-20 h-20 rounded-full bg-white/20"
-          ></motion.div>
-
-          {/* 3 circle left */}
-          <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="absolute bottom-15 right-8 md:right-32 lg:right-6 w-20 h-20 rounded-full bg-white/20"
-          ></motion.div>
-
-          {/* 3 circle bottom */}
-          <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="absolute bottom-10 right-16 md:right-40 lg:right-14 w-20 h-20 rounded-full bg-white/20"
-          ></motion.div>
-
-          {/* Bottom left Circle */}
-          <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="absolute -bottom-16 -left-16 w-52 h-52 rounded-full bg-white/20"
-          ></motion.div>
+          {/* Circles */}
+          {[
+            "-top-18 -right-16",
+            "bottom-4 right-8 md:right-32 lg:right-6",
+            "bottom-15 right-8 md:right-32 lg:right-6",
+            "bottom-10 right-16 md:right-40 lg:right-14",
+            "-bottom-16 -left-16",
+          ].map((pos, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.3 }}
+              className={`absolute ${pos} w-20 h-20 lg:w-52 lg:h-52 rounded-full bg-white/20`}
+            />
+          ))}
 
           <motion.div
             initial={{ x: -20, opacity: 0 }}
@@ -133,162 +103,147 @@ const Register = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <h3 className="text-3xl font-semibold mb-8 text-white">Register</h3>
+            <h3 className="text-3xl font-semibold mb-8 text-white">
+              Create Account
+            </h3>
 
-            <form className="space-y-6">
-              {/* Name Field */}
-              <motion.div
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.7 }}
-              >
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+              {/* Name */}
+              <div>
                 <label className="block mb-2 text-sm font-medium text-gray-300">
                   Full Name
                 </label>
-                <div className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus-within:border-lime-400 transition">
+                <div className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3">
                   <FaUser className="mr-3 text-lime-400" />
                   <input
                     type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
+                    {...register("name", { required: "Name is required" })}
                     placeholder="Your full name"
-                    className="bg-transparent w-full focus:outline-none text-white placeholder-gray-500"
-                    required
+                    className="bg-transparent w-full text-white placeholder-gray-500 focus:outline-none"
                   />
                 </div>
-              </motion.div>
+                {errors.name && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
 
-              {/* Email Field */}
-              <motion.div
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.8 }}
-              >
+              {/* Email */}
+              <div>
                 <label className="block mb-2 text-sm font-medium text-gray-300">
                   Email
                 </label>
-                <div className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus-within:border-lime-400 transition">
+                <div className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3">
                   <FaEnvelope className="mr-3 text-lime-400" />
                   <input
                     type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
+                    {...register("email", { required: "Email is required" })}
                     placeholder="Your email address"
-                    className="bg-transparent w-full focus:outline-none text-white placeholder-gray-500"
-                    required
+                    className="bg-transparent w-full text-white placeholder-gray-500 focus:outline-none"
                   />
                 </div>
-              </motion.div>
+                {errors.email && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
 
-              {/* Photo Upload */}
-              <motion.div
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.9 }}
-              >
+              {/* Profile Photo */}
+              <div>
                 <label className="block mb-2 text-sm font-medium text-gray-300">
                   Profile Photo
                 </label>
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={handlePhotoClick}
+                <label
+                  htmlFor="photo"
                   className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 cursor-pointer hover:border-lime-400 transition"
                 >
                   <FaCamera className="mr-3 text-lime-400" />
-                  <span className="text-white">
-                    {formData.photo ? formData.photo.name : "Upload your photo"}
+                  <span className="text-white truncate">
+                    {selectedPhoto?.[0]?.name || "Upload your photo"}
                   </span>
                   <input
+                    id="photo"
                     type="file"
-                    ref={fileInputRef}
-                    name="photo"
-                    onChange={handleChange}
                     accept="image/*"
                     className="hidden"
+                    {...register("photo", {
+                      required: "Photo is required",
+                    })}
                   />
-                </motion.div>
-              </motion.div>
+                </label>
+                {errors.photo && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.photo.message}
+                  </p>
+                )}
+              </div>
 
-              {/* Password Field */}
-              <motion.div
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1 }}
-              >
+              {/* Password */}
+              <div>
                 <label className="block mb-2 text-sm font-medium text-gray-300">
                   Password
                 </label>
-                <div className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus-within:border-lime-400 transition">
+                <div className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3">
                   <FaLock className="mr-3 text-lime-400" />
                   <input
                     type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
+                    {...register("password", {
+                      required: "Password is required",
+                    })}
+                    autoComplete="true"
                     placeholder="Create a password"
-                    className="bg-transparent w-full focus:outline-none text-white placeholder-gray-500"
-                    required
+                    className="bg-transparent w-full text-white placeholder-gray-500 focus:outline-none"
                   />
                 </div>
-              </motion.div>
+                {errors.password && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
 
               {/* Submit Button */}
               <motion.button
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1.1 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="flex items-center justify-center gap-3 w-full py-3.5 bg-gradient-to-r from-lime-500 to-emerald-500 text-black font-bold rounded-lg hover:shadow-lg hover:shadow-lime-400/20 transition-all cursor-pointer"
+                className="flex items-center justify-center gap-3 w-full py-3.5 bg-gradient-to-r from-lime-500 to-emerald-500 text-black font-bold rounded-lg hover:shadow-lg hover:shadow-lime-400/20 transition-all"
               >
                 <FaUserPlus />
                 Create Account
               </motion.button>
             </form>
 
-            {/* Social Divider */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2 }}
-              className="my-8 flex items-center"
-            >
+            {/* Divider */}
+            <div className="my-8 flex items-center">
               <div className="flex-grow border-t border-gray-700" />
               <span className="px-4 text-sm text-gray-400">
                 Or sign up with
               </span>
               <div className="flex-grow border-t border-gray-700" />
-            </motion.div>
+            </div>
 
             {/* Social Logins */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.3 }}
-              className="flex gap-4"
-            >
+            <div className="flex gap-4">
               <motion.button
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center justify-center gap-2 w-full py-2.5 border border-gray-700 bg-gray-800 rounded-lg hover:bg-gray-700/50 transition-colors cursor-pointer"
+                className="flex items-center justify-center gap-2 w-full py-2.5 border border-gray-700 bg-gray-800 rounded-lg hover:bg-gray-700/50"
               >
                 <FaGoogle className="text-red-400" />
                 <span className="text-white">Google</span>
               </motion.button>
-
               <motion.button
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center justify-center gap-2 w-full py-2.5 border border-gray-700 bg-gray-800 rounded-lg hover:bg-gray-700/50 transition-colors cursor-pointer"
+                className="flex items-center justify-center gap-2 w-full py-2.5 border border-gray-700 bg-gray-800 rounded-lg hover:bg-gray-700/50"
               >
                 <FaGithub className="text-gray-200" />
                 <span className="text-white">GitHub</span>
               </motion.button>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </motion.div>

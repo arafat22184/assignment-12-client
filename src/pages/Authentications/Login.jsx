@@ -12,7 +12,7 @@ import { Link } from "react-router";
 
 const Login = () => {
   return (
-    <section className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-4 pt-20 lg:pt-0">
+    <section className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-4 pt-24">
       {/* Floating background elements */}
       <motion.div
         initial={{ opacity: 0 }}
