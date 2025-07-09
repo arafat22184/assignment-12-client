@@ -10,13 +10,13 @@ import image from "../assets/personalized-workouts-animate.svg";
 
 const About = () => {
   return (
-    <section className="px-6 text-white flex items-center justify-center">
+    <section className="px-6 text-white flex items-center justify-center max-w-6xl mx-auto">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         viewport={{ once: true }}
-        className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+        className="grid grid-cols-1 lg:grid-cols-2 lg:gap-12 items-center"
       >
         {/* Left - Text */}
         <div>
