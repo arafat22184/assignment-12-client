@@ -4,9 +4,34 @@ import { FaEnvelope, FaLock, FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import { Link } from "react-router";
 import GoogleLoginBtn from "../../Shared/GoogleLoginBtn";
 import GithubLoginBtn from "../../Shared/GithubLoginBtn";
+import toastMessage from "../../utils/toastMessage";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Login = () => {
-  const handleLogin = () => {};
+  const { signInUser, user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    signInUser(email, password)
+      .then((res) => {
+        const loggedInUser = res.user;
+        const lastLoginUpdate = { lastLogin: new Date() };
+        axiosSecure
+          .patch(`/users/${loggedInUser.email}`, lastLoginUpdate)
+          .then(() => {
+            toastMessage("Logged in successfully!", "success");
+          });
+      })
+      .catch((err) => {
+        err && toastMessage("Login failed. Please try again later.", "error");
+      });
+  };
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-4 pt-24">
@@ -112,7 +137,7 @@ const Login = () => {
           >
             <h3 className="text-3xl font-semibold mb-8 text-white">Login</h3>
 
-            <form className="space-y-6">
+            <form onSubmit={handleLogin} className="space-y-6">
               {/* Email Field */}
               <motion.div
                 initial={{ y: 10, opacity: 0 }}
@@ -126,6 +151,7 @@ const Login = () => {
                   <FaEnvelope className="mr-3 text-lime-400" />
                   <input
                     type="email"
+                    name="email"
                     placeholder="Your email address"
                     className="bg-transparent w-full focus:outline-none text-white placeholder-gray-500"
                   />
@@ -146,6 +172,7 @@ const Login = () => {
                   <input
                     type="password"
                     placeholder="Your password"
+                    name="password"
                     autoComplete="true"
                     className="bg-transparent w-full focus:outline-none text-white placeholder-gray-500"
                   />
@@ -160,7 +187,9 @@ const Login = () => {
                 className="text-right"
               >
                 <Link
-                  to="/forgot-password"
+                  onClick={() => {
+                    toastMessage("under development", "info");
+                  }}
                   className="text-sm text-lime-400 hover:text-lime-300 transition-colors"
                 >
                   Forgot your password?
