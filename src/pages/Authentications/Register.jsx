@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useContext } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const { createUser, updateUser } = useContext(AuthContext);
@@ -27,25 +28,64 @@ const Register = () => {
   } = useForm();
 
   const handleRegister = (data) => {
-    const { password, ...userData } = data;
+    const { name, email, password, photo } = data;
+    const imageFile = photo[0];
 
-    // createuser
-    createUser(data.email, data.password).then(async (result) => {
-      const user = result.user;
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("imageFile", imageFile);
 
-      if (user) {
-        // User Add to DB
-        const res = await axiosSecure.post("/users", userData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+    // Create user in Firebase
+    createUser(email, password)
+      .then(async (result) => {
+        const user = result.user;
 
-        console.log(res);
-      }
-      // updateUser({ displayName: name, photoURL:  });
-    });
-    // if success => db user post
+        if (user) {
+          try {
+            const res = await axiosSecure.post("/users", formData);
+            if (res.data) {
+              updateUser({
+                ...user,
+                displayName: name,
+                photoURL: res.data.finalImageUrl,
+              }).then((res) => {
+                console.log(res);
+              });
+            }
+          } catch (err) {
+            toast.error(
+              "Registration failed. Please verify your information and try again!",
+              {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              }
+            );
+          }
+        }
+      })
+      .catch((error) => {
+        error &&
+          toast.error(
+            "Registration failed. Please verify your information and try again!",
+            {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            }
+          );
+      });
   };
 
   const selectedPhoto = watch("photo");
