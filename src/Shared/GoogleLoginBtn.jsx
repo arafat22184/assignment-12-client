@@ -24,7 +24,7 @@ const GoogleLoginBtn = () => {
         photoURL,
       };
 
-      const response = await axiosSecure.post("/users/google", user);
+      const response = await axiosSecure.post("/users/social", user);
 
       if (response.data.message === "User created") {
         toastMessage("🎉 Welcome! Your account has been created.", "success");
