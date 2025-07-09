@@ -5,11 +5,14 @@ import { FaGithub } from "react-icons/fa";
 import { AuthContext } from "../Provider/AuthProvider";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import toastMessage from "../utils/toastMessage";
+import { useNavigate } from "react-router";
 
 const GithubLoginBtn = () => {
-  const { gitHubLogIn } = useContext(AuthContext);
+  const { gitHubLogIn, location } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
+  // Github Login
   const handleGitHubLogin = async () => {
     try {
       const res = await gitHubLogIn();
@@ -17,6 +20,7 @@ const GithubLoginBtn = () => {
 
       if (!email) return;
 
+      navigate(`${location ? location : "/"}`);
       const user = {
         name: displayName,
         email,

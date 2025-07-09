@@ -5,10 +5,12 @@ import { FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../Provider/AuthProvider";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import toastMessage from "../utils/toastMessage";
+import { useNavigate } from "react-router";
 
 const GoogleLoginBtn = () => {
-  const { googleLogIn } = useContext(AuthContext);
+  const { googleLogIn, location } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   // Google Login
   const handleGoogleLogin = async () => {
@@ -18,6 +20,7 @@ const GoogleLoginBtn = () => {
 
       if (!email) return;
 
+      navigate(`${location ? location : "/"}`);
       const user = {
         name: displayName,
         email,
