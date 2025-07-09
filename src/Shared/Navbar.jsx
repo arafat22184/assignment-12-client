@@ -8,6 +8,7 @@ import {
   FaSignInAlt,
   FaUserPlus,
   FaSignOutAlt,
+  FaUserCircle,
 } from "react-icons/fa";
 import { Link, NavLink } from "react-router";
 import { AiFillDashboard } from "react-icons/ai";
@@ -46,7 +47,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/allTrainers"
+          to="/trainers"
           onClick={handleMobileLinkClick}
           className={({ isActive }) =>
             `flex items-center gap-2 px-4 py-3 rounded-lg transition-all ${
@@ -62,7 +63,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/allClasses"
+          to="/classes"
           onClick={handleMobileLinkClick}
           className={({ isActive }) =>
             `flex items-center gap-2 px-4 py-3 rounded-lg transition-all ${
@@ -78,7 +79,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/allClasses"
+          to="/dashboard"
           onClick={handleMobileLinkClick}
           className={({ isActive }) =>
             `flex items-center gap-2 px-4 py-3 rounded-lg transition-all ${
@@ -125,12 +126,18 @@ const Navbar = () => {
     <div className="flex items-center gap-3">
       {user ? (
         <>
-          <img
-            src={user.photoURL || "/default-avatar.png"}
-            alt="User Avatar"
-            className="w-10 h-10 rounded-full border-2 border-lime-400"
-            title={user.displayName || "User"}
-          />
+          <Link to={"/dashboard"}>
+            {user.photoURL ? (
+              <img
+                src={user.photoURL}
+                alt="User Avatar"
+                className="w-10 h-10 rounded-full border-2 border-lime-400"
+                title={user.displayName || "User"}
+              />
+            ) : (
+              <FaUserCircle className="text-lime-400" size={40} />
+            )}
+          </Link>
           <button
             onClick={handleLogout}
             className="flex items-center gap-2 px-4 py-2 rounded-lg border border-lime-400 text-lime-400 hover:bg-lime-400/10 transition-all cursor-pointer"
