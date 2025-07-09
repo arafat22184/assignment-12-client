@@ -1,8 +1,8 @@
 import axios from "axios";
 import { use } from "react";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
+import toastMessage from "../utils/toastMessage";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000",
@@ -29,20 +29,11 @@ const useAxiosSecure = () => {
         logOut();
         navigate("/login")
           .then(() => {
-            toast.error("Please sign in again", {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: false,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            });
+            toastMessage("Please sign in again", "error");
           })
           .catch((err) => {
             if (err) {
-              alert("contact admin");
+              toastMessage("Please contact Admin", "error");
             }
           });
       }
