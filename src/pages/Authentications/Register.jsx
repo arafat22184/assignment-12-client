@@ -20,8 +20,8 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
+  const handleRegister = (data) => {
+    console.log("Form Data:", data.photo[0].name);
   };
 
   const selectedPhoto = watch("photo");
@@ -107,13 +107,13 @@ const Register = () => {
               Create Account
             </h3>
 
-            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            <form className="space-y-6" onSubmit={handleSubmit(handleRegister)}>
               {/* Name */}
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-300">
                   Full Name
                 </label>
-                <div className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3">
+                <div className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus-within:border-lime-400 transition">
                   <FaUser className="mr-3 text-lime-400" />
                   <input
                     type="text"
@@ -134,7 +134,7 @@ const Register = () => {
                 <label className="block mb-2 text-sm font-medium text-gray-300">
                   Email
                 </label>
-                <div className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3">
+                <div className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus-within:border-lime-400 transition">
                   <FaEnvelope className="mr-3 text-lime-400" />
                   <input
                     type="email"
@@ -185,19 +185,59 @@ const Register = () => {
                 <label className="block mb-2 text-sm font-medium text-gray-300">
                   Password
                 </label>
-                <div className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3">
+                <div className="flex items-center bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus-within:border-lime-400 transition">
                   <FaLock className="mr-3 text-lime-400" />
                   <input
                     type="password"
+                    autoComplete="true"
                     {...register("password", {
                       required: "Password is required",
+                      minLength: {
+                        value: 6,
+                        message: "Password must be at least 6 characters",
+                      },
+                      validate: {
+                        hasUppercase: (value) =>
+                          /[A-Z]/.test(value) ||
+                          "Must include at least one uppercase letter",
+                        hasLowercase: (value) =>
+                          /[a-z]/.test(value) ||
+                          "Must include at least one lowercase letter",
+                        hasNumber: (value) =>
+                          /\d/.test(value) ||
+                          "Must include at least one number",
+                        hasSpecialChar: (value) =>
+                          /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(value) ||
+                          "Must include at least one special character",
+                      },
                     })}
-                    autoComplete="true"
                     placeholder="Create a password"
                     className="bg-transparent w-full text-white placeholder-gray-500 focus:outline-none"
                   />
                 </div>
-                {errors.password && (
+
+                {/* Error Messages */}
+                {errors.password?.types?.hasUppercase && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.password.types.hasUppercase}
+                  </p>
+                )}
+                {errors.password?.types?.hasLowercase && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.password.types.hasLowercase}
+                  </p>
+                )}
+                {errors.password?.types?.hasSpecialChar && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.password.types.hasSpecialChar}
+                  </p>
+                )}
+                {errors.password?.types?.hasNumber && (
+                  <p className="text-red-400 text-sm mt-1">
+                    {errors.password.types.hasNumber}
+                  </p>
+                )}
+                {errors.password?.message && !errors.password?.types && (
                   <p className="text-red-400 text-sm mt-1">
                     {errors.password.message}
                   </p>
@@ -209,7 +249,7 @@ const Register = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="flex items-center justify-center gap-3 w-full py-3.5 bg-gradient-to-r from-lime-500 to-emerald-500 text-black font-bold rounded-lg hover:shadow-lg hover:shadow-lime-400/20 transition-all"
+                className="flex items-center justify-center gap-3 w-full py-3.5 bg-gradient-to-r from-lime-500 to-emerald-500 text-black font-bold rounded-lg hover:shadow-lg hover:shadow-lime-400/20 transition-all cursor-pointer"
               >
                 <FaUserPlus />
                 Create Account
@@ -230,7 +270,7 @@ const Register = () => {
               <motion.button
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center justify-center gap-2 w-full py-2.5 border border-gray-700 bg-gray-800 rounded-lg hover:bg-gray-700/50"
+                className="flex items-center justify-center gap-2 w-full py-2.5 border border-gray-700 bg-gray-800 rounded-lg hover:bg-gray-700/50 cursor-pointer"
               >
                 <FaGoogle className="text-red-400" />
                 <span className="text-white">Google</span>
@@ -238,7 +278,7 @@ const Register = () => {
               <motion.button
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex items-center justify-center gap-2 w-full py-2.5 border border-gray-700 bg-gray-800 rounded-lg hover:bg-gray-700/50"
+                className="flex items-center justify-center gap-2 w-full py-2.5 border border-gray-700 bg-gray-800 rounded-lg hover:bg-gray-700/50 cursor-pointer"
               >
                 <FaGithub className="text-gray-200" />
                 <span className="text-white">GitHub</span>
