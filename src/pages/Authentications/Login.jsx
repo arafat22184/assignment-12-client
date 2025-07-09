@@ -1,17 +1,25 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import { FaEnvelope, FaLock, FaSignInAlt, FaUserPlus } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import GoogleLoginBtn from "../../Shared/GoogleLoginBtn";
 import GithubLoginBtn from "../../Shared/GithubLoginBtn";
 import toastMessage from "../../utils/toastMessage";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Login = () => {
-  const { signInUser, user } = useContext(AuthContext);
+  const { signInUser, setLocation } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setLocation(location.state);
+  }, [location.state, setLocation]);
+
+  // Login Functionalities
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -25,6 +33,7 @@ const Login = () => {
         axiosSecure
           .patch(`/users/${loggedInUser.email}`, lastLoginUpdate)
           .then(() => {
+            navigate(location.state ? location.state : "/");
             toastMessage("Logged in successfully!", "success");
           });
       })

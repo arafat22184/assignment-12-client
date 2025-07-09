@@ -7,7 +7,7 @@ import {
   FaCamera,
   FaUserPlus,
 } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useContext } from "react";
@@ -17,8 +17,9 @@ import GithubLoginBtn from "../../Shared/GithubLoginBtn";
 import toastMessage from "../../utils/toastMessage";
 
 const Register = () => {
-  const { createUser, updateUser } = useContext(AuthContext);
+  const { createUser, updateUser, location, setUser } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -35,7 +36,6 @@ const Register = () => {
     formData.append("name", name);
     formData.append("email", email);
     formData.append("imageFile", imageFile);
-    console.log(formData);
 
     // Create user in Firebase
     createUser(email, password)
@@ -43,6 +43,11 @@ const Register = () => {
         const user = result.user;
 
         if (user) {
+          navigate(`${location ? location : "/"}`);
+          toastMessage(
+            "Account created successfully! Welcome aboard 🎉",
+            "success"
+          );
           try {
             const res = await axiosSecure.post("/users", formData);
             if (res.data) {
@@ -51,10 +56,11 @@ const Register = () => {
                 displayName: name,
                 photoURL: res.data.finalImageUrl,
               }).then(() => {
-                toastMessage(
-                  "Account created successfully! Welcome aboard 🎉",
-                  "success"
-                );
+                setUser({
+                  ...user,
+                  displayName: name,
+                  photoURL: res.data.finalImageUrl,
+                });
               });
             }
           } catch (err) {
