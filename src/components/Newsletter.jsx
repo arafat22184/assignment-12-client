@@ -1,8 +1,49 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
 import { FaEnvelope, FaUser, FaPaperPlane } from "react-icons/fa";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import toastMessage from "../utils/toastMessage";
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Newsletter = () => {
+  const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+
+  const handleNewsLetter = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const userData = { name, email };
+
+    if (!name) {
+      toastMessage("Please provide name", "warning");
+      return;
+    } else if (!email) {
+      toastMessage("Please provide email", "warning");
+      return;
+    }
+
+    axiosSecure
+      .post("/newsletter", userData)
+      .then((res) => {
+        if (res.data.insertedId) {
+          toastMessage("Thanks for subscribing! 🎉", "success");
+        }
+      })
+      .catch((err) => {
+        if (err.response.data.message === "User already subscribed") {
+          toastMessage("You're already receiving our updates!", "warning");
+        } else {
+          toastMessage(
+            "Something went wrong. Please try again later.",
+            "error"
+          );
+        }
+      });
+  };
+
   return (
     <motion.section
       initial={{ opacity: 0 }}
@@ -53,7 +94,7 @@ const Newsletter = () => {
           viewport={{ once: true }}
           className="bg-gray-900/80 backdrop-blur-lg rounded-2xl p-8 md:p-10 border border-gray-800 shadow-2xl"
         >
-          <form className="space-y-6">
+          <form onSubmit={handleNewsLetter} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Name Field */}
               <div>
@@ -66,6 +107,9 @@ const Newsletter = () => {
                   </div>
                   <input
                     type="text"
+                    name="name"
+                    defaultValue={user?.displayName && user?.displayName}
+                    readOnly={!!user?.displayName}
                     placeholder="Enter your name"
                     className="w-full bg-gray-800 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent transition"
                   />
@@ -83,6 +127,9 @@ const Newsletter = () => {
                   </div>
                   <input
                     type="email"
+                    name="email"
+                    defaultValue={user?.email && user?.email}
+                    readOnly={!!user?.email}
                     placeholder="your@email.com"
                     className="w-full bg-gray-800 border border-gray-700 rounded-xl py-3 pl-10 pr-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-lime-500 focus:border-transparent transition"
                   />
@@ -93,7 +140,7 @@ const Newsletter = () => {
             {/* Submit Button */}
             <div className="pt-2">
               <motion.button
-                type="button"
+                type="submit"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full py-4 rounded-xl font-bold flex items-center justify-center gap-3 bg-gradient-to-r from-lime-500 to-emerald-500 text-black hover:shadow-lg hover:shadow-lime-400/20 transition-all cursor-pointer"
