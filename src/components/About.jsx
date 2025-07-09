@@ -24,7 +24,7 @@ const About = () => {
             initial={{ x: -20, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="text-4xl md:text-5xl font-bold mb-6 text-lime-400"
+            className="text-4xl md:text-5xl font-bold pb-4 bg-gradient-to-r from-lime-400 to-emerald-400 bg-clip-text text-transparent"
           >
             About FitForge
           </motion.h2>
