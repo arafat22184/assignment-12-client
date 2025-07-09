@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { MdMenu, MdClose } from "react-icons/md";
 import {
   FaHome,
@@ -7,11 +7,15 @@ import {
   FaComments,
   FaSignInAlt,
   FaUserPlus,
+  FaSignOutAlt,
 } from "react-icons/fa";
 import { Link, NavLink } from "react-router";
 import { AiFillDashboard } from "react-icons/ai";
+import { AuthContext } from "../Provider/AuthProvider";
+import toastMessage from "../utils/toastMessage";
 
 const Navbar = () => {
+  const { user, logOut } = useContext(AuthContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -107,36 +111,66 @@ const Navbar = () => {
     </>
   );
 
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        toastMessage("Logout Successful", "success");
+      })
+      .catch((error) => {
+        error && toastMessage("Failed to log out. Please try again.", "error");
+      });
+  };
+
   const authLinks = (
-    <div className="flex gap-2">
-      <NavLink
-        to="/login"
-        onClick={handleMobileLinkClick}
-        className={({ isActive }) =>
-          `flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
-            isActive
-              ? "bg-lime-400 text-black font-medium"
-              : "border border-lime-400 text-lime-400 hover:bg-lime-400/10"
-          }`
-        }
-      >
-        <FaSignInAlt />
-        Login
-      </NavLink>
-      <NavLink
-        to="/register"
-        onClick={handleMobileLinkClick}
-        className={({ isActive }) =>
-          `flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
-            isActive
-              ? "bg-lime-400 text-black font-medium"
-              : "bg-lime-400/10 text-lime-400 hover:bg-lime-400/20"
-          }`
-        }
-      >
-        <FaUserPlus />
-        Register
-      </NavLink>
+    <div className="flex items-center gap-3">
+      {user ? (
+        <>
+          <img
+            src={user.photoURL || "/default-avatar.png"}
+            alt="User Avatar"
+            className="w-10 h-10 rounded-full border-2 border-lime-400"
+            title={user.displayName || "User"}
+          />
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg border border-lime-400 text-lime-400 hover:bg-lime-400/10 transition-all cursor-pointer"
+          >
+            <FaSignOutAlt />
+            Logout
+          </button>
+        </>
+      ) : (
+        <>
+          <NavLink
+            to="/login"
+            onClick={handleMobileLinkClick}
+            className={({ isActive }) =>
+              `flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                isActive
+                  ? "bg-lime-400 text-black font-medium"
+                  : "border border-lime-400 text-lime-400 hover:bg-lime-400/10"
+              }`
+            }
+          >
+            <FaSignInAlt />
+            Login
+          </NavLink>
+          <NavLink
+            to="/register"
+            onClick={handleMobileLinkClick}
+            className={({ isActive }) =>
+              `flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+                isActive
+                  ? "bg-lime-400 text-black font-medium"
+                  : "bg-lime-400/10 text-lime-400 hover:bg-lime-400/20"
+              }`
+            }
+          >
+            <FaUserPlus />
+            Register
+          </NavLink>
+        </>
+      )}
     </div>
   );
 
