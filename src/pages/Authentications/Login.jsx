@@ -1,13 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { motion } from "framer-motion";
-import {
-  FaEnvelope,
-  FaLock,
-  FaGoogle,
-  FaGithub,
-  FaSignInAlt,
-  FaUserPlus,
-} from "react-icons/fa";
+import { FaEnvelope, FaLock, FaSignInAlt, FaUserPlus } from "react-icons/fa";
 import { Link } from "react-router";
 import GoogleLoginBtn from "../../Shared/GoogleLoginBtn";
 import GithubLoginBtn from "../../Shared/GithubLoginBtn";
@@ -151,6 +144,7 @@ const Login = () => {
                   <input
                     type="password"
                     placeholder="Your password"
+                    autoComplete="true"
                     className="bg-transparent w-full focus:outline-none text-white placeholder-gray-500"
                   />
                 </div>

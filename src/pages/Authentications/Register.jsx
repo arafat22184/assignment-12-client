@@ -3,8 +3,6 @@ import { motion } from "framer-motion";
 import {
   FaEnvelope,
   FaLock,
-  FaGoogle,
-  FaGithub,
   FaUser,
   FaCamera,
   FaUserPlus,
@@ -14,9 +12,9 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useContext } from "react";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
-import { toast } from "react-toastify";
 import GoogleLoginBtn from "../../Shared/GoogleLoginBtn";
 import GithubLoginBtn from "../../Shared/GithubLoginBtn";
+import toastMessage from "../../utils/toastMessage";
 
 const Register = () => {
   const { createUser, updateUser } = useContext(AuthContext);
@@ -37,6 +35,7 @@ const Register = () => {
     formData.append("name", name);
     formData.append("email", email);
     formData.append("imageFile", imageFile);
+    console.log(formData);
 
     // Create user in Firebase
     createUser(email, password)
@@ -52,52 +51,25 @@ const Register = () => {
                 displayName: name,
                 photoURL: res.data.finalImageUrl,
               }).then(() => {
-                toast.success(
+                toastMessage(
                   "Account created successfully! Welcome aboard 🎉",
-                  {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "colored",
-                  }
+                  "success"
                 );
               });
             }
           } catch (err) {
-            toast.error(
+            toastMessage(
               "Registration failed. Please verify your information and try again!",
-              {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-              }
+              "error"
             );
           }
         }
       })
       .catch((error) => {
         error &&
-          toast.error(
+          toastMessage(
             "Registration failed. Please verify your information and try again!",
-            {
-              position: "top-right",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: false,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            }
+            "error"
           );
       });
   };
