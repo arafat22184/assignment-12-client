@@ -50,7 +50,7 @@ const features = [
 
 const Featured = () => {
   return (
-    <section className="bg-black text-white py-16 px-4 md:px-10">
+    <section className="text-white py-16 px-4 md:px-10">
       <div className="max-w-7xl mx-auto text-center">
         <h2 className="text-4xl font-bold mb-4">
           Why Choose <span className="text-lime-400">FitForge?</span>

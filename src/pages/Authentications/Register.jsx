@@ -11,8 +11,14 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../Provider/AuthProvider";
+import { useContext } from "react";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Register = () => {
+  const { createUser, updateUser } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
+
   const {
     register,
     handleSubmit,
@@ -21,7 +27,25 @@ const Register = () => {
   } = useForm();
 
   const handleRegister = (data) => {
-    console.log("Form Data:", data.photo[0].name);
+    const { password, ...userData } = data;
+
+    // createuser
+    createUser(data.email, data.password).then(async (result) => {
+      const user = result.user;
+
+      if (user) {
+        // User Add to DB
+        const res = await axiosSecure.post("/users", userData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        console.log(res);
+      }
+      // updateUser({ displayName: name, photoURL:  });
+    });
+    // if success => db user post
   };
 
   const selectedPhoto = watch("photo");
