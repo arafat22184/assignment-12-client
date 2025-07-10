@@ -22,33 +22,38 @@ import useUserRole from "../Hooks/useUserRole";
 const DashboardLayout = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
-  const userRole = useUserRole();
+  const { roleLoading, role } = useUserRole();
   const location = useLocation();
-  console.log(userRole);
 
   const navLinks = [
     { to: "/", label: "Home", icon: <FiHome /> },
     { to: "/dashboard", label: "Dashboard", icon: <RiDashboardLine /> },
-    {
-      to: "/dashboard/subscribers",
-      label: "Newsletter Subscribers",
-      icon: <FiMail />,
-    },
-    {
-      to: "/dashboard/allTrainers",
-      label: "All Trainers",
-      icon: <FiUsers />,
-    },
-    {
-      to: "/dashboard/trainerApplications",
-      label: "Trainer Applications",
-      icon: <FiUserPlus />,
-    },
-    {
-      to: "/dashboard/balance",
-      label: "Balance Overview",
-      icon: <FiBarChart2 />,
-    },
+
+    ...(!roleLoading && role === "admin"
+      ? [
+          {
+            to: "/dashboard/subscribers",
+            label: "Newsletter Subscribers",
+            icon: <FiMail />,
+          },
+          {
+            to: "/dashboard/allTrainers",
+            label: "All Trainers",
+            icon: <FiUsers />,
+          },
+          {
+            to: "/dashboard/trainerApplications",
+            label: "Trainer Applications",
+            icon: <FiUserPlus />,
+          },
+          {
+            to: "/dashboard/balance",
+            label: "Balance Overview",
+            icon: <FiBarChart2 />,
+          },
+        ]
+      : []),
+
     { to: "/dashboard/addClass", label: "Add Class", icon: <FiPlusSquare /> },
     { to: "/dashboard/profile", label: "Profile", icon: <FiUser /> },
   ];
@@ -156,14 +161,14 @@ const DashboardLayout = () => {
       </AnimatePresence>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex lg:flex-col w-20 xl:w-64 min-h-screen bg-gray-900 border-r border-gray-800 transition-all duration-300">
+      <aside className="hidden lg:flex lg:flex-col w-20 xl:w-72 min-h-screen bg-gray-900 border-r border-gray-800 transition-all duration-300">
         <div className="flex flex-col justify-center items-center">
           <img
             className="w-36 mt-4"
             src="https://i.ibb.co/qS1WNFv/Fit-Forge-Logo.png"
             alt="fitforge logo"
           />
-          <div className="p-4 xl:p-6 flex flex-row items-center border-b border-gray-800 gap-4">
+          <div className="p-2 xl:p-6 flex flex-row items-center border-b border-gray-800 gap-2">
             <Link to="/dashboard/profile" className="group">
               <UserAvatar size="xl" />
             </Link>

@@ -5,8 +5,9 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Authentications/Login";
 import Register from "../pages/Authentications/Register";
 import DashboardLayout from "../layouts/DashboardLayout";
-import PrivateRoute from "../Provider/PrivateRoute";
 import Subscribers from "../pages/Admin/Subscribers";
+import PrivateRoute from "../routes/PrivateRoute";
+import AdminRoute from "../routes/AdminRoute";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "subscribers",
-        element: <Subscribers></Subscribers>,
+        element: (
+          <AdminRoute>
+            <Subscribers></Subscribers>
+          </AdminRoute>
+        ),
       },
     ],
   },
