@@ -11,6 +11,7 @@ import AdminRoute from "../routes/AdminRoute";
 import AllTrainers from "../pages/Admin/AllTrainers";
 import TrainerApplications from "../pages/Admin/TrainerApplications";
 import Balance from "../pages/Admin/Balance";
+import AddClass from "../pages/AddClass";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
             <Balance></Balance>
           </AdminRoute>
         ),
+      },
+      {
+        path: "addClass",
+        element: <AddClass></AddClass>,
       },
     ],
   },
