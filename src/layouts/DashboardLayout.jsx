@@ -7,32 +7,50 @@ import { Tooltip } from "react-tooltip";
 import {
   FiHome,
   FiUser,
-  FiActivity,
   FiLogOut,
   FiMenu,
   FiX,
-  FiCalendar,
-  FiAward,
-  FiSettings,
   FiMail,
+  FiUsers,
+  FiUserPlus,
+  FiPlusSquare,
+  FiBarChart2,
 } from "react-icons/fi";
 import { RiDashboardLine } from "react-icons/ri";
-import { FaDumbbell } from "react-icons/fa";
+import useUserRole from "../Hooks/useUserRole";
 
 const DashboardLayout = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const { user, logout } = useContext(AuthContext);
+  const userRole = useUserRole();
   const location = useLocation();
+  console.log(userRole);
 
   const navLinks = [
     { to: "/", label: "Home", icon: <FiHome /> },
     { to: "/dashboard", label: "Dashboard", icon: <RiDashboardLine /> },
-    { to: "/dashboard/workouts", label: "Workouts", icon: <FaDumbbell /> },
-    { to: "/dashboard/plans", label: "Training Plans", icon: <FiCalendar /> },
-    { to: "/dashboard/analytics", label: "Analytics", icon: <FiActivity /> },
-    { to: "/dashboard/achievements", label: "Achievements", icon: <FiAward /> },
+    {
+      to: "/dashboard/subscribers",
+      label: "Newsletter Subscribers",
+      icon: <FiMail />,
+    },
+    {
+      to: "/dashboard/allTrainers",
+      label: "All Trainers",
+      icon: <FiUsers />,
+    },
+    {
+      to: "/dashboard/trainerApplications",
+      label: "Trainer Applications",
+      icon: <FiUserPlus />,
+    },
+    {
+      to: "/dashboard/balance",
+      label: "Balance Overview",
+      icon: <FiBarChart2 />,
+    },
+    { to: "/dashboard/addClass", label: "Add Class", icon: <FiPlusSquare /> },
     { to: "/dashboard/profile", label: "Profile", icon: <FiUser /> },
-    { to: "/dashboard/settings", label: "Settings", icon: <FiSettings /> },
   ];
 
   const currentPageTitle =

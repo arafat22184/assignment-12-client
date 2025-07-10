@@ -1,7 +1,6 @@
 import React, { use } from "react";
 import { AuthContext } from "./AuthProvider";
 import { Navigate, useLocation } from "react-router";
-import LoadingSpinner from "../Components/LoadingSpinner";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = use(AuthContext);
@@ -9,7 +8,7 @@ const PrivateRoute = ({ children }) => {
   const { pathname } = useLocation();
 
   if (loading) {
-    return <LoadingSpinner></LoadingSpinner>;
+    return <h1>Loading...</h1>;
   }
 
   if (user && user?.email) {
