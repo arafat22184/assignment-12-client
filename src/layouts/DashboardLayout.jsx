@@ -18,10 +18,11 @@ import {
 } from "react-icons/fi";
 import { RiDashboardLine } from "react-icons/ri";
 import useUserRole from "../Hooks/useUserRole";
+import toastMessage from "../utils/toastMessage";
 
 const DashboardLayout = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const { user, logout } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   const { roleLoading, role } = useUserRole();
   const location = useLocation();
 
@@ -78,6 +79,16 @@ const DashboardLayout = () => {
         />
       </div>
     );
+  };
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        toastMessage("Logout Succefull", "success");
+      })
+      .catch((err) => {
+        err && toastMessage("Something wen't wrongt please try again", "error");
+      });
   };
 
   return (
@@ -148,11 +159,11 @@ const DashboardLayout = () => {
 
               <div className="p-3 border-t border-gray-800">
                 <button
-                  onClick={logout}
-                  className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-lime-400"
+                  onClick={handleLogout}
+                  className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-lime-400 cursor-pointer"
                 >
                   <FiLogOut className="text-lg" />
-                  Sign Out
+                  Logout
                 </button>
               </div>
             </motion.aside>
@@ -218,13 +229,13 @@ const DashboardLayout = () => {
 
         <div className="p-3 border-t border-gray-800">
           <button
-            onClick={logout}
+            onClick={handleLogout}
             data-tooltip-id="sidebar-tooltip"
-            data-tooltip-content="Sign Out"
-            className="w-full flex items-center justify-center xl:justify-start gap-3 px-2 xl:px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-lime-400"
+            data-tooltip-content="Logout"
+            className="w-full flex items-center justify-center xl:justify-start gap-3 px-2 xl:px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-lime-400 cursor-pointer"
           >
             <FiLogOut className="text-xl" />
-            <span className="hidden xl:inline">Sign Out</span>
+            <span className="hidden xl:inline">Logout</span>
           </button>
         </div>
 

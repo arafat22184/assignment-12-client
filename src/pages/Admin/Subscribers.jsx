@@ -20,13 +20,16 @@ const Subscribers = () => {
     },
   });
 
-  if (isLoading) return <Loading />;
-  if (isError)
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError) {
     return (
       <div className="text-red-500 text-center mt-8">
         Failed to load subscribers
       </div>
     );
+  }
 
   // Format date to be more readable
   const formatDate = (dateString) => {
