@@ -8,6 +8,9 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import Subscribers from "../pages/Admin/Subscribers";
 import PrivateRoute from "../routes/PrivateRoute";
 import AdminRoute from "../routes/AdminRoute";
+import AllTrainers from "../pages/Admin/AllTrainers";
+import TrainerApplications from "../pages/Admin/TrainerApplications";
+import Balance from "../pages/Admin/Balance";
 
 const router = createBrowserRouter([
   {
