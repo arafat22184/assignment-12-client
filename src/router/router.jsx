@@ -44,6 +44,30 @@ const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
+      {
+        path: "allTrainers",
+        element: (
+          <AdminRoute>
+            <AllTrainers></AllTrainers>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "trainerApplications",
+        element: (
+          <AdminRoute>
+            <TrainerApplications></TrainerApplications>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "balance",
+        element: (
+          <AdminRoute>
+            <Balance></Balance>
+          </AdminRoute>
+        ),
+      },
     ],
   },
 ]);

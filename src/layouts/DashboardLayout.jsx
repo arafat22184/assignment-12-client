@@ -163,11 +163,13 @@ const DashboardLayout = () => {
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex lg:flex-col w-20 xl:w-72 min-h-screen bg-gray-900 border-r border-gray-800 transition-all duration-300">
         <div className="flex flex-col justify-center items-center">
-          <img
-            className="w-36 mt-4"
-            src="https://i.ibb.co/qS1WNFv/Fit-Forge-Logo.png"
-            alt="fitforge logo"
-          />
+          <Link to={"/"}>
+            <img
+              className="w-36 mt-4"
+              src="https://i.ibb.co/qS1WNFv/Fit-Forge-Logo.png"
+              alt="fitforge logo"
+            />
+          </Link>
           <div className="p-2 xl:p-6 flex flex-row items-center border-b border-gray-800 gap-2">
             <Link to="/dashboard/profile" className="group">
               <UserAvatar size="xl" />
@@ -183,6 +185,12 @@ const DashboardLayout = () => {
                   {user?.email || "user@example.com"}
                 </span>
               </div>
+              {role === "trainer" ||
+                (role === "admin" && (
+                  <div className="bg-lime-400 w-full text-black mt-1 text-xs px-2 py-1 rounded-full">
+                    {role.charAt(0).toUpperCase() + role.slice(1)}
+                  </div>
+                ))}
             </div>
           </div>
         </div>
