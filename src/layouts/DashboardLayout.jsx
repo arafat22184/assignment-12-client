@@ -79,12 +79,12 @@ const DashboardLayout = () => {
 
   const memberLinks = [
     {
-      to: "/dashboard/manageSlots",
+      to: "/dashboard/activityLog",
       label: "Activity Log",
       icon: <FiList />,
     },
     {
-      to: "/dashboard/addSlot",
+      to: "/dashboard/bookedTrainer",
       label: "Booked Trainer",
       icon: <FiUserCheck />,
     },

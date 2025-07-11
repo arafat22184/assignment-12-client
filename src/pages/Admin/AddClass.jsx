@@ -5,9 +5,9 @@ import Swal from "sweetalert2";
 import { FaImage } from "react-icons/fa";
 import { MdFitnessCenter, MdOutlineDescription } from "react-icons/md";
 import { GiWeightLiftingUp } from "react-icons/gi";
-import useAuth from "../Hooks/useAuth";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
-import toastMessage from "../utils/toastMessage";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import toastMessage from "../../utils/toastMessage";
 import Select from "react-select";
 
 const AddClass = () => {
@@ -23,14 +23,11 @@ const AddClass = () => {
     { value: "strength", label: "Strength Training" },
     { value: "cardio", label: "Cardio" },
     { value: "flexibility", label: "Flexibility & Mobility" },
-    { value: "balance", label: "Balance & Coordination" },
     { value: "endurance", label: "Endurance" },
-    { value: "core", label: "Core Strength" },
-    { value: "recovery", label: "Recovery & Injury Prevention" },
     { value: "yoga", label: "Yoga & Mindfulness" },
     { value: "bodybuilding", label: "Bodybuilding" },
     { value: "weightlifting", label: "Weight Lifting" },
-    { value: "mental", label: "Mental Resilience" },
+    { value: "meditation", label: "Meditation" },
   ];
 
   const {

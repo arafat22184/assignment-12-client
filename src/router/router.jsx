@@ -1,4 +1,3 @@
-import React from "react";
 import { createBrowserRouter } from "react-router";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/Home/Home";
@@ -11,7 +10,12 @@ import AdminRoute from "../routes/AdminRoute";
 import AllTrainers from "../pages/Admin/AllTrainers";
 import TrainerApplications from "../pages/Admin/TrainerApplications";
 import Balance from "../pages/Admin/Balance";
-import AddClass from "../pages/AddClass";
+import AddClass from "../pages/Admin/AddClass";
+import TrainerRoute from "../routes/TrainerRoute";
+import ManageSlots from "../pages/Trainer/ManageSlots";
+import AddSlot from "../pages/Trainer/AddSlot";
+import AddForum from "../pages/Trainer/AddForum";
+import AllClasses from "../pages/AllClasses/AllClasses";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         Component: Register,
+      },
+      {
+        path: "/classes",
+        Component: AllClasses,
       },
     ],
   },
@@ -74,7 +82,35 @@ const router = createBrowserRouter([
       },
       {
         path: "addClass",
-        element: <AddClass></AddClass>,
+        element: (
+          <AdminRoute>
+            <AddClass></AddClass>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manageSlots",
+        element: (
+          <TrainerRoute>
+            <ManageSlots></ManageSlots>
+          </TrainerRoute>
+        ),
+      },
+      {
+        path: "addSlot",
+        element: (
+          <TrainerRoute>
+            <AddSlot></AddSlot>
+          </TrainerRoute>
+        ),
+      },
+      {
+        path: "addForum",
+        element: (
+          <TrainerRoute>
+            <AddForum></AddForum>
+          </TrainerRoute>
+        ),
       },
     ],
   },
