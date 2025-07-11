@@ -16,6 +16,8 @@ import ManageSlots from "../pages/Trainer/ManageSlots";
 import AddSlot from "../pages/Trainer/AddSlot";
 import AddForum from "../pages/Trainer/AddForum";
 import AllClasses from "../pages/AllClasses/AllClasses";
+import AllTrainersHome from "../pages/AllTrainers/AllTrainersHome";
+import BeTrainer from "../pages/BeTrainer/BeTrainer";
 
 const router = createBrowserRouter([
   {
@@ -27,16 +29,28 @@ const router = createBrowserRouter([
         Component: Home,
       },
       {
+        path: "/classes",
+        Component: AllClasses,
+      },
+      {
+        path: "/trainers/:id",
+        Component: AllTrainersHome,
+      },
+      {
+        path: "beTrainer",
+        element: (
+          <PrivateRoute>
+            <BeTrainer></BeTrainer>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/login",
         Component: Login,
       },
       {
         path: "/register",
         Component: Register,
-      },
-      {
-        path: "/classes",
-        Component: AllClasses,
       },
     ],
   },
