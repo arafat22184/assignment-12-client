@@ -66,7 +66,7 @@ const AllTrainers = () => {
              <p class="text-gray-400 text-sm mt-1">They will become a regular member.</p>`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#a3e635", // lime-400
+      confirmButtonColor: "#a3e635",
       cancelButtonColor: "#6b7280",
       confirmButtonText: "Yes, demote",
       background: "#1f2937",

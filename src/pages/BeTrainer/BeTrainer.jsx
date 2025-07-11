@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Select from "react-select";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
@@ -37,29 +37,36 @@ const timeSlotOptions = [
 const BeTrainer = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const queryClient = useQueryClient();
   const [selectedDays, setSelectedDays] = useState([]);
   const [selectedTimeSlots, setSelectedTimeSlots] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
     reset,
+    formState: { errors },
   } = useForm({
     defaultValues: {
       email: user?.email || "",
       name: user?.displayName || "",
-      age: user?.age || "",
-      experience: user?.experience || "",
-      certifications: user?.certifications || "",
+      age: "",
+      experience: "",
+      certifications: "",
+      skills: [],
     },
   });
 
   const photo = watch("photo");
 
-  const { data: userData, isLoading } = useQuery({
+  const {
+    data: userData,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["user", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/${user?.email}`);
@@ -131,6 +138,8 @@ const BeTrainer = () => {
         },
       });
 
+      await refetch();
+
       Swal.fire({
         title: "Success!",
         text: "Your trainer application has been submitted",
@@ -144,6 +153,59 @@ const BeTrainer = () => {
       });
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleUpdateApplication = async () => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You'll need to submit a new application form",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, update it!",
+      });
+
+      if (result.isConfirmed) {
+        setIsUpdating(true);
+        const response = await axiosSecure.patch(
+          `/users/delete-trainer-application/${user.email}`
+        );
+
+        if (response.data.success) {
+          // Reset form state
+          setSelectedDays([]);
+          setSelectedTimeSlots([]);
+          reset({
+            email: user?.email || "",
+            name: user?.displayName || "",
+            age: "",
+            experience: "",
+            certifications: "",
+            skills: [],
+            photo: null,
+          });
+
+          // Refetch user data
+          await queryClient.invalidateQueries(["user", user?.email]);
+
+          Swal.fire(
+            "Reset!",
+            "Your application has been reset. You can now submit a new one.",
+            "success"
+          );
+        }
+      }
+    } catch (error) {
+      Swal.fire(
+        "Error!",
+        error.response?.data?.message || "Failed to reset application",
+        "error"
+      );
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -237,10 +299,11 @@ const BeTrainer = () => {
                   and reapply:
                 </p>
                 <button
-                  onClick={() => reset()}
-                  className="bg-lime-500 hover:bg-lime-600 text-gray-900 font-bold py-2 px-4 rounded-lg"
+                  onClick={handleUpdateApplication}
+                  disabled={isUpdating}
+                  className="bg-lime-500 hover:bg-lime-600 text-gray-900 font-bold py-2 px-4 rounded-lg disabled:bg-lime-700 disabled:cursor-not-allowed cursor-pointer"
                 >
-                  Update Application
+                  {isUpdating ? "Updating..." : "Update Application"}
                 </button>
               </div>
             )}
@@ -434,7 +497,7 @@ const BeTrainer = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-lime-500 hover:bg-lime-600 text-gray-900 font-bold py-3 px-4 rounded-lg transition-colors disabled:bg-lime-700 disabled:cursor-not-allowed"
+              className="w-full bg-lime-500 hover:bg-lime-600 text-gray-900 font-bold py-3 px-4 rounded-lg transition-colors disabled:bg-lime-700 disabled:cursor-not-allowed cursor-pointer"
             >
               {isSubmitting ? "Submitting..." : "Apply to be a Trainer"}
             </button>

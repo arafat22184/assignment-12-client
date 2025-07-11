@@ -18,6 +18,7 @@ import AddForum from "../pages/Trainer/AddForum";
 import AllClasses from "../pages/AllClasses/AllClasses";
 import AllTrainersHome from "../pages/AllTrainers/AllTrainersHome";
 import BeTrainer from "../pages/BeTrainer/BeTrainer";
+import TrainerApplicationDetail from "../pages/Admin/TrainerApplicationDetail";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +84,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <TrainerApplications></TrainerApplications>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "trainerApplications/:id",
+        element: (
+          <AdminRoute>
+            <TrainerApplicationDetail></TrainerApplicationDetail>
           </AdminRoute>
         ),
       },
