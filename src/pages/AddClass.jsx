@@ -2,14 +2,13 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { FaCalendarAlt, FaChalkboardTeacher, FaImage } from "react-icons/fa";
+import { FaImage } from "react-icons/fa";
 import { MdFitnessCenter, MdOutlineDescription } from "react-icons/md";
 import { GiWeightLiftingUp } from "react-icons/gi";
 import useAuth from "../Hooks/useAuth";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import toastMessage from "../utils/toastMessage";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import Select from "react-select";
 
 const AddClass = () => {
   const { user } = useAuth();
@@ -17,55 +16,43 @@ const AddClass = () => {
   const queryClient = useQueryClient();
   const [imageFile, setImageFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [selectedDays, setSelectedDays] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+  const [selectedSkills, setSelectedSkills] = useState([]);
+  const [showSkillError, setShowSkillError] = useState(false);
 
-  const daysOfWeek = [
-    { id: "mon", label: "Mon" },
-    { id: "tue", label: "Tue" },
-    { id: "wed", label: "Wed" },
-    { id: "thu", label: "Thu" },
-    { id: "fri", label: "Fri" },
-    { id: "sat", label: "Sat" },
-    { id: "sun", label: "Sun" },
+  const skillOptions = [
+    { value: "strength", label: "Strength Training" },
+    { value: "cardio", label: "Cardio" },
+    { value: "flexibility", label: "Flexibility & Mobility" },
+    { value: "balance", label: "Balance & Coordination" },
+    { value: "endurance", label: "Endurance" },
+    { value: "core", label: "Core Strength" },
+    { value: "recovery", label: "Recovery & Injury Prevention" },
+    { value: "yoga", label: "Yoga & Mindfulness" },
+    { value: "bodybuilding", label: "Bodybuilding" },
+    { value: "weightlifting", label: "Weight Lifting" },
+    { value: "mental", label: "Mental Resilience" },
   ];
 
   const {
     register,
     handleSubmit,
     reset,
-
     formState: { errors },
   } = useForm();
-
-  const toggleDaySelection = (day) => {
-    setSelectedDays((prev) =>
-      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
-    );
-  };
 
   const { mutate: addClass } = useMutation({
     mutationFn: async (classData) => {
       setIsUploading(true);
 
-      // Format schedule data
-      const scheduleData = {
-        days: selectedDays,
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
-        startTime: startTime.toTimeString().substring(0, 5),
-        endTime: endTime.toTimeString().substring(0, 5),
-      };
-
       const formData = new FormData();
       formData.append("image", imageFile);
-      formData.append("schedule", JSON.stringify(scheduleData));
+      formData.append(
+        "skills",
+        JSON.stringify(selectedSkills.map((skill) => skill.value))
+      );
 
       Object.keys(classData).forEach((key) => {
-        if (key !== "schedule") {
+        if (key !== "skills") {
           formData.append(key, classData[key]);
         }
       });
@@ -83,7 +70,8 @@ const AddClass = () => {
     onSuccess: () => {
       reset();
       setImageFile(null);
-      setSelectedDays([]);
+      setSelectedSkills([]);
+      setShowSkillError(false);
       setIsUploading(false);
       queryClient.invalidateQueries(["classes"]);
       Swal.fire({
@@ -109,10 +97,16 @@ const AddClass = () => {
       toastMessage("Please select a class image", "error");
       return;
     }
-    if (selectedDays.length === 0) {
-      toastMessage("Please select at least one day", "error");
+
+    // Check for skills selection
+    if (selectedSkills.length === 0) {
+      setShowSkillError(true);
+      toastMessage("Please select at least one skill", "error");
       return;
+    } else {
+      setShowSkillError(false);
     }
+
     addClass(data);
   };
 
@@ -125,6 +119,68 @@ const AddClass = () => {
       }
       setImageFile(file);
     }
+  };
+
+  // Custom styles for react-select
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      backgroundColor: "#1f2937",
+      borderColor: state.isFocused ? "#a3e635" : "#374151",
+      boxShadow: state.isFocused ? "0 0 0 1px #a3e635" : "none",
+      "&:hover": {
+        borderColor: state.isFocused ? "#a3e635" : "#4b5563",
+      },
+      minHeight: "44px",
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected
+        ? "#a3e635"
+        : state.isFocused
+        ? "#374151"
+        : "#1f2937",
+      color: state.isSelected ? "#1f2937" : "#f3f4f6",
+      "&:active": {
+        backgroundColor: "#a3e635",
+        color: "#1f2937",
+      },
+    }),
+    multiValue: (provided) => ({
+      ...provided,
+      backgroundColor: "#a3e635",
+      color: "#1f2937",
+    }),
+    multiValueLabel: (provided) => ({
+      ...provided,
+      color: "#1f2937",
+      fontWeight: "500",
+    }),
+    multiValueRemove: (provided) => ({
+      ...provided,
+      color: "#1f2937",
+      ":hover": {
+        backgroundColor: "#84cc16",
+        color: "#1f2937",
+      },
+    }),
+    input: (provided) => ({
+      ...provided,
+      color: "#f3f4f6",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "#1f2937",
+      borderColor: "#374151",
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: "#f3f4f6",
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: "#9ca3af",
+    }),
   };
 
   return (
@@ -210,124 +266,30 @@ const AddClass = () => {
           )}
         </div>
 
-        {/* Instructor Name */}
+        {/* Skills Section */}
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-1">
-            Instructor Name <span className="text-red-400">*</span>
+            Skills Focus <span className="text-red-400">*</span>
           </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <FaChalkboardTeacher className="text-gray-400" />
-            </div>
-            <input
-              type="text"
-              {...register("instructorName", {
-                required: "Instructor name is required",
-              })}
-              className="pl-10 w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-transparent text-gray-300"
-              placeholder="Enter instructor's name"
-            />
-          </div>
-          {errors.instructorName && (
+          <Select
+            isMulti
+            options={skillOptions}
+            value={selectedSkills}
+            onChange={(selected) => {
+              setSelectedSkills(selected);
+              if (selected.length > 0) setShowSkillError(false);
+            }}
+            className="text-gray-900"
+            classNamePrefix="select"
+            styles={customStyles}
+            placeholder="Select skills this class focuses on..."
+            isSearchable
+          />
+          {showSkillError && (
             <p className="text-red-400 text-sm mt-1">
-              {errors.instructorName.message}
+              Please select at least one skill
             </p>
           )}
-        </div>
-
-        {/* Schedule */}
-        <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">
-            Schedule <span className="text-red-400">*</span>
-          </label>
-
-          {/* Days Selection */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Days of Week *
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {daysOfWeek.map((day) => (
-                <button
-                  key={day.id}
-                  type="button"
-                  onClick={() => toggleDaySelection(day.id)}
-                  className={`px-3 py-1 rounded-md text-sm ${
-                    selectedDays.includes(day.id)
-                      ? "bg-lime-400 text-gray-900"
-                      : "bg-gray-800 text-gray-300 hover:bg-gray-700"
-                  }`}
-                >
-                  {day.label}
-                </button>
-              ))}
-            </div>
-            {selectedDays.length === 0 && (
-              <p className="text-red-400 text-sm mt-1">
-                Please select at least one day
-              </p>
-            )}
-          </div>
-
-          {/* Date Range */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">
-                Start Date *
-              </label>
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
-                minDate={new Date()}
-                className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-transparent text-gray-300"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">
-                End Date *
-              </label>
-              <DatePicker
-                selected={endDate}
-                onChange={(date) => setEndDate(date)}
-                minDate={startDate}
-                className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-transparent text-gray-300"
-              />
-            </div>
-          </div>
-
-          {/* Time Range */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">
-                Start Time *
-              </label>
-              <DatePicker
-                selected={startTime}
-                onChange={(time) => setStartTime(time)}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={15}
-                timeCaption="Time"
-                dateFormat="h:mm aa"
-                className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-transparent text-gray-300"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-1">
-                End Time *
-              </label>
-              <DatePicker
-                selected={endTime}
-                onChange={(time) => setEndTime(time)}
-                showTimeSelect
-                showTimeSelectOnly
-                timeIntervals={15}
-                timeCaption="Time"
-                dateFormat="h:mm aa"
-                className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-transparent text-gray-300"
-              />
-            </div>
-          </div>
         </div>
 
         {/* Description */}
