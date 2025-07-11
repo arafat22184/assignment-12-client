@@ -77,22 +77,24 @@ const Navbar = () => {
           Classes
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/dashboard"
-          onClick={handleMobileLinkClick}
-          className={({ isActive }) =>
-            `flex items-center gap-2 px-4 py-3 rounded-lg transition-all ${
-              isActive
-                ? "bg-lime-400/20 text-lime-400 font-medium"
-                : "text-white hover:bg-white/10"
-            }`
-          }
-        >
-          <AiFillDashboard className="text-lg" />
-          Dashboard
-        </NavLink>
-      </li>
+      {user && user?.email && (
+        <li>
+          <NavLink
+            to="/dashboard"
+            onClick={handleMobileLinkClick}
+            className={({ isActive }) =>
+              `flex items-center gap-2 px-4 py-3 rounded-lg transition-all ${
+                isActive
+                  ? "bg-lime-400/20 text-lime-400 font-medium"
+                  : "text-white hover:bg-white/10"
+              }`
+            }
+          >
+            <AiFillDashboard className="text-lg" />
+            Dashboard
+          </NavLink>
+        </li>
+      )}
       <li>
         <NavLink
           to="/community"

@@ -15,6 +15,11 @@ import {
   FiUserPlus,
   FiPlusSquare,
   FiBarChart2,
+  FiCalendar,
+  FiPlusCircle,
+  FiMessageSquare,
+  FiList,
+  FiUserCheck,
 } from "react-icons/fi";
 import { RiDashboardLine } from "react-icons/ri";
 import useUserRole from "../Hooks/useUserRole";
@@ -26,37 +31,79 @@ const DashboardLayout = () => {
   const { roleLoading, role } = useUserRole();
   const location = useLocation();
 
+  const adminLinks = [
+    {
+      to: "/dashboard/subscribers",
+      label: "Newsletter Subscribers",
+      icon: <FiMail />,
+    },
+    {
+      to: "/dashboard/allTrainers",
+      label: "All Trainers",
+      icon: <FiUsers />,
+    },
+    {
+      to: "/dashboard/trainerApplications",
+      label: "Trainer Applications",
+      icon: <FiUserPlus />,
+    },
+    {
+      to: "/dashboard/balance",
+      label: "Balance Overview",
+      icon: <FiBarChart2 />,
+    },
+    {
+      to: "/dashboard/addClass",
+      label: "Add Class",
+      icon: <FiPlusSquare />,
+    },
+  ];
+
+  const trainerLinks = [
+    {
+      to: "/dashboard/manageSlots",
+      label: "Manage Slots",
+      icon: <FiCalendar />,
+    },
+    {
+      to: "/dashboard/addSlot",
+      label: "Add Slot",
+      icon: <FiPlusCircle />,
+    },
+    {
+      to: "/dashboard/addForum",
+      label: "Add Forum",
+      icon: <FiMessageSquare />,
+    },
+  ];
+
+  const memberLinks = [
+    {
+      to: "/dashboard/manageSlots",
+      label: "Activity Log",
+      icon: <FiList />,
+    },
+    {
+      to: "/dashboard/addSlot",
+      label: "Booked Trainer",
+      icon: <FiUserCheck />,
+    },
+    {
+      to: "/dashboard/profile",
+      label: "Profile",
+      icon: <FiUser />,
+    },
+  ];
+
   const navLinks = [
     { to: "/", label: "Home", icon: <FiHome /> },
     { to: "/dashboard", label: "Dashboard", icon: <RiDashboardLine /> },
 
-    ...(!roleLoading && role === "admin"
-      ? [
-          {
-            to: "/dashboard/subscribers",
-            label: "Newsletter Subscribers",
-            icon: <FiMail />,
-          },
-          {
-            to: "/dashboard/allTrainers",
-            label: "All Trainers",
-            icon: <FiUsers />,
-          },
-          {
-            to: "/dashboard/trainerApplications",
-            label: "Trainer Applications",
-            icon: <FiUserPlus />,
-          },
-          {
-            to: "/dashboard/balance",
-            label: "Balance Overview",
-            icon: <FiBarChart2 />,
-          },
-        ]
-      : []),
+    ...(!roleLoading && role === "admin" ? adminLinks : []),
 
-    { to: "/dashboard/addClass", label: "Add Class", icon: <FiPlusSquare /> },
-    { to: "/dashboard/profile", label: "Profile", icon: <FiUser /> },
+    ...(!roleLoading && role === "trainer" ? trainerLinks : []),
+
+    ...(!roleLoading && role === "member" ? memberLinks : []),
   ];
 
   const currentPageTitle =
@@ -90,6 +137,8 @@ const DashboardLayout = () => {
         err && toastMessage("Something wen't wrongt please try again", "error");
       });
   };
+
+  console.log(role);
 
   return (
     <div className="min-h-screen flex bg-gray-950 text-gray-100">
@@ -196,12 +245,17 @@ const DashboardLayout = () => {
                   {user?.email || "user@example.com"}
                 </span>
               </div>
-              {role === "trainer" ||
-                (role === "admin" && (
-                  <div className="bg-lime-400 w-full text-black mt-1 text-xs px-2 py-1 rounded-full">
-                    {role.charAt(0).toUpperCase() + role.slice(1)}
-                  </div>
-                ))}
+              {role === "trainer" && (
+                <div className="bg-lime-400 w-full text-black mt-1 text-xs px-2 py-1 rounded-full">
+                  {role.charAt(0).toUpperCase() + role.slice(1)}
+                </div>
+              )}
+
+              {role === "admin" && (
+                <div className="bg-lime-400 w-full text-black mt-1 text-xs px-2 py-1 rounded-full">
+                  {role.charAt(0).toUpperCase() + role.slice(1)}
+                </div>
+              )}
             </div>
           </div>
         </div>
