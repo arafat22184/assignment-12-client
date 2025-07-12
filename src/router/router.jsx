@@ -19,6 +19,7 @@ import AllClasses from "../pages/AllClasses/AllClasses";
 import AllTrainersHome from "../pages/AllTrainers/AllTrainersHome";
 import BeTrainer from "../pages/BeTrainer/BeTrainer";
 import TrainerApplicationDetail from "../pages/Admin/TrainerApplicationDetail";
+import TrainersDetails from "../pages/TrainersDetails/TrainersDetails";
 
 const router = createBrowserRouter([
   {
@@ -34,8 +35,12 @@ const router = createBrowserRouter([
         Component: AllClasses,
       },
       {
-        path: "/trainers/:id",
+        path: "/trainers",
         Component: AllTrainersHome,
+      },
+      {
+        path: "/trainers/:id",
+        Component: TrainersDetails,
       },
       {
         path: "beTrainer",
