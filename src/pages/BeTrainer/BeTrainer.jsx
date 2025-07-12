@@ -57,6 +57,9 @@ const BeTrainer = () => {
       experience: "",
       certifications: "",
       skills: [],
+      facebook: "",
+      instagram: "",
+      linkedin: "",
     },
   });
 
@@ -127,6 +130,9 @@ const BeTrainer = () => {
         JSON.stringify(selectedTimeSlots.map((time) => time.value))
       );
       formData.append("skills", JSON.stringify(data.skills || []));
+      formData.append("facebook", data.facebook || "");
+      formData.append("instagram", data.instagram || "");
+      formData.append("linkedin", data.linkedin || "");
 
       if (data.photo && data.photo.length > 0) {
         formData.append("imageFile", data.photo[0]);
@@ -186,6 +192,9 @@ const BeTrainer = () => {
             certifications: "",
             skills: [],
             photo: null,
+            facebook: "",
+            instagram: "",
+            linkedin: "",
           });
 
           // Refetch user data
@@ -286,6 +295,48 @@ const BeTrainer = () => {
                 </p>
               </div>
             </div>
+
+            {(application.facebook ||
+              application.instagram ||
+              application.linkedin) && (
+              <div className="mb-4">
+                <p className="text-gray-300 font-semibold mb-2">
+                  Social Media:
+                </p>
+                <div className="flex gap-4">
+                  {application.facebook && (
+                    <a
+                      href={application.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-400 hover:underline"
+                    >
+                      Facebook
+                    </a>
+                  )}
+                  {application.instagram && (
+                    <a
+                      href={application.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-pink-400 hover:underline"
+                    >
+                      Instagram
+                    </a>
+                  )}
+                  {application.linkedin && (
+                    <a
+                      href={application.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-300 hover:underline"
+                    >
+                      LinkedIn
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
 
             {application.status === "approved" && (
               <p className="text-green-400 mt-4">
@@ -489,6 +540,44 @@ const BeTrainer = () => {
                 className="text-gray-900"
                 placeholder="Select time slots..."
                 closeMenuOnSelect={false}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <label className="block text-gray-300 mb-2">
+                Facebook Profile
+              </label>
+              <input
+                type="url"
+                {...register("facebook")}
+                placeholder="https://facebook.com/username"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-300 mb-2">
+                Instagram Profile
+              </label>
+              <input
+                type="url"
+                {...register("instagram")}
+                placeholder="https://instagram.com/username"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300"
+              />
+            </div>
+
+            <div>
+              <label className="block text-gray-300 mb-2">
+                LinkedIn Profile
+              </label>
+              <input
+                type="url"
+                {...register("linkedin")}
+                placeholder="https://linkedin.com/in/username"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-gray-300"
               />
             </div>
           </div>
