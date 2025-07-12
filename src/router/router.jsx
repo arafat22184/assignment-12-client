@@ -20,6 +20,7 @@ import AllTrainersHome from "../pages/AllTrainers/AllTrainersHome";
 import BeTrainer from "../pages/BeTrainer/BeTrainer";
 import TrainerApplicationDetail from "../pages/Admin/TrainerApplicationDetail";
 import TrainersDetails from "../pages/TrainersDetails/TrainersDetails";
+import TrainerBookPage from "../pages/TrainerBookPage/TrainerBookPage";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <BeTrainer></BeTrainer>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/book-trainer/:id",
+        element: (
+          <PrivateRoute>
+            <TrainerBookPage></TrainerBookPage>
           </PrivateRoute>
         ),
       },
