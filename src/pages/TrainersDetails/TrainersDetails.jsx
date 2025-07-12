@@ -139,9 +139,14 @@ const TrainersDetails = () => {
 
           {/* Available Slots Section - Content Height Only */}
           <div className="bg-gray-800 rounded-xl p-6 border border-gray-700 h-min sticky top-4">
-            <h2 className="text-2xl font-bold text-lime-400 mb-6 flex items-center gap-2">
-              <FaCalendarAlt /> Available Slots
-            </h2>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-lime-400 flex items-center gap-2">
+                <FaCalendarAlt /> Available Slots
+              </h2>
+              <p className="text-gray-400 text-sm mt-2">
+                Click on any available time to book your training session
+              </p>
+            </div>
 
             <div className="space-y-4">
               {trainer.trainerApplication?.availableDays?.map((day, index) => (
@@ -149,13 +154,13 @@ const TrainersDetails = () => {
                   <h3 className="text-lg font-semibold text-white mb-3">
                     {day}
                   </h3>
-                  <div className="flex flex-col lg:flex-row gap-1">
+                  <div className="flex  gap-2">
                     {trainer.trainerApplication?.availableTimeSlots?.map(
                       (time, timeIndex) => (
                         <Link
                           key={timeIndex}
                           to={`/book-trainer/${trainer._id}?day=${day}&time=${time}`}
-                          className="bg-lime-400 hover:bg-lime-500 text-gray-900 font-medium py-2 px-3 rounded text-center text-sm transition-colors whitespace-nowrap"
+                          className="bg-lime-400 hover:bg-lime-500 text-gray-900 font-medium py-2 px-4 rounded text-sm transition-colors whitespace-nowrap"
                         >
                           {time}
                         </Link>
