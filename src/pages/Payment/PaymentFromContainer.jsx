@@ -8,7 +8,7 @@ const PaymentFormContainer = ({
   trainer,
   day,
   time,
-  packageName,
+  package: packageName,
   price,
   user,
   classId,

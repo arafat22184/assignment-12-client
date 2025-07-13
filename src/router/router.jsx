@@ -87,15 +87,15 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
-      // Admin Route
       {
         index: true,
         element: (
-          <AdminRoute>
+          <PrivateRoute>
             <DashboardHome></DashboardHome>
-          </AdminRoute>
+          </PrivateRoute>
         ),
       },
+      // Admin Route
       {
         path: "subscribers",
         element: (
