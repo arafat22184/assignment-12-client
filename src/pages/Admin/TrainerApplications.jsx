@@ -111,8 +111,6 @@ const TrainerApplications = () => {
 
   if (isLoading) return <Loading />;
 
-  console.log(applications);
-
   return (
     <div className="p-4 sm:p-6 bg-gray-900 rounded-xl border border-gray-800 shadow-lg">
       {/* Header */}

@@ -7,6 +7,8 @@ import {
   FaClock,
   FaCalendarDay,
   FaExclamationTriangle,
+  FaTimes,
+  FaUserShield,
 } from "react-icons/fa";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Loading from "../../Shared/Loading";
@@ -15,6 +17,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { fadeIn, staggerContainer, slideIn, zoomIn } from "../../utils/motion";
 import useAuth from "../../Hooks/useAuth";
 import toastMessage from "../../utils/toastMessage";
+import useUserRole from "../../Hooks/useUserRole";
 
 const TrainerBookPage = () => {
   const location = useLocation();
@@ -26,6 +29,7 @@ const TrainerBookPage = () => {
   const day = queryParams.get("day");
   const time = queryParams.get("time");
   const classId = queryParams.get("classId");
+  const { role: userRole } = useUserRole();
 
   const {
     data: trainer = {},
@@ -68,6 +72,23 @@ const TrainerBookPage = () => {
       ],
     },
   ];
+
+  // Check if the current slot is already booked by the user
+  const isSlotBooked = (pkgName) => {
+    if (!trainer.activityLog?.bookedSlots || !user?.email) return false;
+
+    return trainer.activityLog.bookedSlots.some(
+      (slot) =>
+        slot.trainerId === id &&
+        slot.day === day &&
+        slot.time === time &&
+        slot.package === pkgName &&
+        slot.userEmail === user.email
+    );
+  };
+
+  // Check if user is admin or trainer
+  const isAdminOrTrainer = userRole === "admin" || userRole === "trainer";
 
   if (isLoading) return <Loading />;
 
@@ -140,6 +161,22 @@ const TrainerBookPage = () => {
   }
 
   const handleSelectPlan = (pkg) => {
+    if (isAdminOrTrainer) {
+      toastMessage(
+        "Admins and trainers cannot book training sessions",
+        "warning"
+      );
+      return;
+    }
+
+    if (isSlotBooked(pkg.name)) {
+      toastMessage(
+        "You have already booked this slot with this package",
+        "warning"
+      );
+      return;
+    }
+
     const paymentHistory = {
       trainerId: id,
       trainer: trainer.name,
@@ -149,6 +186,7 @@ const TrainerBookPage = () => {
       price: pkg.price,
       paymentStatus: "pending",
       userImage: user.photoURL,
+      userEmail: user.email,
     };
     if (!classId) {
       paymentHistory.classId = classId;
@@ -255,58 +293,109 @@ const TrainerBookPage = () => {
               Choose Your Membership
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <AnimatePresence>
-                {packages.map((pkg, index) => (
-                  <motion.div
-                    key={index}
-                    variants={slideIn("up", "tween", index * 0.1, 0.5)}
-                    initial="hidden"
-                    animate="show"
-                    whileHover={{ y: -10 }}
-                    className={`bg-gray-700 rounded-xl p-6 border-2 ${
-                      index === 1 ? "border-lime-400" : "border-gray-600"
-                    } hover:border-lime-400 transition-all duration-300 shadow-lg hover:shadow-lime-400/20`}
+            {isAdminOrTrainer ? (
+              <motion.div
+                variants={zoomIn(0.2, 1)}
+                className="text-center p-6 bg-gray-700 rounded-xl border border-yellow-400/30"
+              >
+                <div className="flex flex-col items-center justify-center gap-4">
+                  <FaUserShield className="text-yellow-400 text-4xl" />
+                  <h3 className="text-xl font-bold text-white">
+                    {userRole === "admin" ? "Admin Access" : "Trainer Access"}
+                  </h3>
+                  <p className="text-gray-300">
+                    {userRole === "admin"
+                      ? "Admins cannot book training sessions."
+                      : "Trainers cannot book other trainers' sessions."}
+                  </p>
+                  <Link
+                    to="/dashboard"
+                    className="mt-4 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium py-2 px-4 rounded inline-flex items-center gap-2"
                   >
-                    <h3 className="text-xl font-bold text-white mb-3">
-                      {pkg.name}
-                    </h3>
-                    <div className="text-3xl font-bold text-lime-400 mb-4">
-                      {pkg.price}
-                      <span className="text-sm text-gray-400 font-normal ml-1">
-                        /session
-                      </span>
-                    </div>
+                    Go to Dashboard <FaArrowRight />
+                  </Link>
+                </div>
+              </motion.div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <AnimatePresence>
+                  {packages.map((pkg, index) => {
+                    const isBooked = isSlotBooked(pkg.name);
+                    return (
+                      <motion.div
+                        key={index}
+                        variants={slideIn("up", "tween", index * 0.1, 0.5)}
+                        initial="hidden"
+                        animate="show"
+                        whileHover={!isBooked ? { y: -10 } : {}}
+                        className={`bg-gray-700 rounded-xl p-6 border-2 ${
+                          index === 1 ? "border-lime-400" : "border-gray-600"
+                        } ${
+                          isBooked
+                            ? "border-red-400/50 opacity-80"
+                            : "hover:border-lime-400"
+                        } transition-all duration-300 shadow-lg ${
+                          isBooked
+                            ? "hover:shadow-red-400/10"
+                            : "hover:shadow-lime-400/20"
+                        } relative`}
+                      >
+                        {isBooked && (
+                          <div className="absolute top-4 right-4 bg-red-500/90 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
+                            <FaTimes /> Booked
+                          </div>
+                        )}
 
-                    <ul className="space-y-3 mb-6">
-                      {pkg.features.map((feature, i) => (
-                        <motion.li
-                          key={i}
-                          whileHover={{ x: 5 }}
-                          className="flex items-start gap-2 text-gray-300"
-                        >
-                          <FaCheck className="text-lime-400 mt-1 flex-shrink-0" />
-                          <span>{feature}</span>
-                        </motion.li>
-                      ))}
-                    </ul>
+                        <h3 className="text-xl font-bold text-white mb-3">
+                          {pkg.name}
+                        </h3>
+                        <div className="text-3xl font-bold text-lime-400 mb-4">
+                          {pkg.price}
+                          <span className="text-sm text-gray-400 font-normal ml-1">
+                            /session
+                          </span>
+                        </div>
 
-                    <motion.button
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => handleSelectPlan(pkg)}
-                      className={`w-full text-center py-3 px-6 rounded-lg font-bold transition-all duration-300 cursor-pointer ${
-                        index === 1
-                          ? "bg-lime-400 hover:bg-lime-500 text-gray-900"
-                          : "bg-gray-600 hover:bg-gray-500 text-white"
-                      }`}
-                    >
-                      Select Plan <FaArrowRight className="inline ml-2" />
-                    </motion.button>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
+                        <ul className="space-y-3 mb-6">
+                          {pkg.features.map((feature, i) => (
+                            <motion.li
+                              key={i}
+                              whileHover={{ x: 5 }}
+                              className="flex items-start gap-2 text-gray-300"
+                            >
+                              <FaCheck className="text-lime-400 mt-1 flex-shrink-0" />
+                              <span>{feature}</span>
+                            </motion.li>
+                          ))}
+                        </ul>
+
+                        {isBooked ? (
+                          <motion.button
+                            disabled
+                            className="w-full text-center py-3 px-6 rounded-lg font-bold bg-gray-500 text-gray-300 cursor-not-allowed"
+                          >
+                            Already Booked <FaTimes className="inline ml-2" />
+                          </motion.button>
+                        ) : (
+                          <motion.button
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => handleSelectPlan(pkg)}
+                            className={`w-full text-center py-3 px-6 rounded-lg font-bold transition-all duration-300 cursor-pointer ${
+                              index === 1
+                                ? "bg-lime-400 hover:bg-lime-500 text-gray-900"
+                                : "bg-gray-600 hover:bg-gray-500 text-white"
+                            }`}
+                          >
+                            Select Plan <FaArrowRight className="inline ml-2" />
+                          </motion.button>
+                        )}
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
+              </div>
+            )}
           </motion.div>
 
           {/* Navigation */}

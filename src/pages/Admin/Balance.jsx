@@ -10,6 +10,7 @@ import {
   FaChartPie,
   FaChartBar,
   FaArrowRight,
+  FaBox,
 } from "react-icons/fa";
 import { FiTrendingUp, FiUserCheck, FiMail } from "react-icons/fi";
 import {
@@ -114,9 +115,9 @@ const Balance = () => {
       variants={staggerContainer(0.1, 0.3)}
       initial="hidden"
       animate="show"
-      className="min-h-screen pb-12 pt-24 px-4 bg-gray-900/50"
+      className="min-h-screen rounded-xl pb-12 pt-24 px-4 bg-gray-900"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className=" max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
           variants={fadeIn("up", "tween", 0.2, 1)}
@@ -368,10 +369,6 @@ const Balance = () => {
               <FaHistory className="text-lime-400" />
               Recent Transactions
             </h3>
-            <button className="text-lime-400 hover:text-lime-300 text-sm font-medium flex items-center gap-1 transition-colors group">
-              View All
-              <FaArrowRight className="text-xs transition-transform group-hover:translate-x-1" />
-            </button>
           </div>
 
           <div className="overflow-x-auto">
@@ -397,7 +394,10 @@ const Balance = () => {
                     </div>
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-                    Package
+                    <div className="flex items-center gap-2">
+                      <FaBox className="text-lime-400 text-xs" />
+                      Package
+                    </div>
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                     <div className="flex items-center gap-2">

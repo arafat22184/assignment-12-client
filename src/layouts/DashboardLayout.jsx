@@ -138,8 +138,6 @@ const DashboardLayout = () => {
       });
   };
 
-  console.log(role);
-
   return (
     <div className="min-h-screen flex bg-gray-950 text-gray-100">
       {/* Mobile/Tablet Sidebar */}
