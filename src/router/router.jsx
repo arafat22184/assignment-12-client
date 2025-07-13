@@ -86,6 +86,7 @@ const router = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      // Admin Route
       {
         path: "subscribers",
         element: (
@@ -134,6 +135,8 @@ const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
+
+      // Trainer Routes
       {
         path: "manageSlots",
         element: (

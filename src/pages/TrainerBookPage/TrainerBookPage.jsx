@@ -148,6 +148,7 @@ const TrainerBookPage = () => {
       package: pkg.name,
       price: pkg.price,
       paymentStatus: "pending",
+      userImage: user.photoURL,
     };
     if (!classId) {
       paymentHistory.classId = classId;

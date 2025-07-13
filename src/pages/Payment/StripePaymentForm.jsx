@@ -42,7 +42,6 @@ const StripePaymentForm = ({ price, user, trainerId, _id, paymentStatus }) => {
       setError(error.message);
       setProcessing(false);
     } else {
-      console.log("Payment Method:", paymentMethod);
       setProcessing(false);
     }
 
