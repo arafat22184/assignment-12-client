@@ -22,7 +22,7 @@ import TrainerApplicationDetail from "../pages/Admin/TrainerApplicationDetail";
 import TrainersDetails from "../pages/TrainersDetails/TrainersDetails";
 import TrainerBookPage from "../pages/TrainerBookPage/TrainerBookPage";
 import PaymentLayout from "../pages/Payment/PaymentLayout";
-import AdminDashboardHome from "../pages/Admin/AdminDashboardHome";
+import DashboardHome from "../pages/DashboardHome/DashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -92,7 +92,7 @@ const router = createBrowserRouter([
         index: true,
         element: (
           <AdminRoute>
-            <AdminDashboardHome></AdminDashboardHome>
+            <DashboardHome></DashboardHome>
           </AdminRoute>
         ),
       },

@@ -19,9 +19,47 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { motion } from "framer-motion";
 import { Link } from "react-router";
 import StatCard from "../../components/StatCard";
+import { motion } from "framer-motion";
+import { IoIosArrowForward } from "react-icons/io";
+
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      when: "beforeChildren",
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      stiffness: 100,
+      damping: 10,
+    },
+  },
+};
+
+const chartVariants = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      delay: 0.3,
+      duration: 0.5,
+    },
+  },
+};
 
 const AdminDashboardHome = () => {
   const axiosSecure = useAxiosSecure();
@@ -51,9 +89,13 @@ const AdminDashboardHome = () => {
   if (isLoading) return <Loading />;
   if (isError)
     return (
-      <div className="text-red-500 text-center mt-8">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="text-red-500 text-center mt-8"
+      >
         Failed to load dashboard data
-      </div>
+      </motion.div>
     );
 
   // Prepare data for charts
@@ -66,19 +108,42 @@ const AdminDashboardHome = () => {
     dashboardData.payments?.last6Transactions?.slice(0, 3) || [];
 
   return (
-    <div className="p-4 sm:p-6 bg-gray-900 rounded-xl space-y-6">
-      {/* Header (unchanged) */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <motion.div
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="p-4 sm:p-6 bg-gray-900 rounded-xl space-y-6"
+    >
+      {/* Header */}
+      <motion.div
+        variants={itemVariants}
+        className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+      >
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
+          <motion.h1
+            className="text-2xl md:text-3xl font-bold text-white flex items-center gap-3"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+          >
             <MdFitnessCenter className="text-lime-400 text-3xl" />
             Fitness Admin Dashboard
-          </h1>
-          <p className="text-gray-400 mt-2">
+          </motion.h1>
+          <motion.p
+            className="text-gray-400 mt-2"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
             Overview of your fitness platform's performance
-          </p>
+          </motion.p>
         </div>
-        <div className="bg-gray-800 px-4 py-2 rounded-lg flex items-center gap-2">
+        <motion.div
+          className="bg-gray-800 px-4 py-2 rounded-lg flex items-center gap-2"
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
           <FaCalendarAlt className="text-lime-400" />
           <span className="text-white">
             {new Date().toLocaleDateString("en-US", {
@@ -88,52 +153,72 @@ const AdminDashboardHome = () => {
               day: "numeric",
             })}
           </span>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Compact Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard
-          icon={<FaEnvelope className="text-lime-400 text-xl" />}
-          title="Subscribers"
-          value={dashboardData.subscribers.length}
-          description="Fitness enthusiasts"
-          color="lime"
-        />
-        <StatCard
-          icon={<GiWeightLiftingUp className="text-blue-400 text-xl" />}
-          title="Trainers"
-          value={dashboardData.trainers.length}
-          description="Certified professionals"
-          color="blue"
-        />
-        <StatCard
-          icon={<FaDollarSign className="text-amber-400 text-xl" />}
-          title="Revenue"
-          value={`$${dashboardData.payments?.totalPaid?.toLocaleString() || 0}`}
-          description="All-time earnings"
-          color="amber"
-        />
-        <StatCard
-          icon={<FaUserTie className="text-purple-400 text-xl" />}
-          title="Avg. Sessions"
-          value={
-            dashboardData.payments?.last6Transactions?.length > 0
-              ? Math.round(
-                  dashboardData.payments.last6Transactions.length /
-                    dashboardData.trainers.length
-                )
-              : 0
-          }
-          description="Per trainer"
-          color="purple"
-        />
-      </div>
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+        variants={containerVariants}
+      >
+        <motion.div variants={itemVariants}>
+          <StatCard
+            icon={<FaEnvelope className="text-lime-400 text-xl" />}
+            title="Subscribers"
+            value={dashboardData.subscribers.length}
+            description="Fitness enthusiasts"
+            color="lime"
+          />
+        </motion.div>
+        <motion.div variants={itemVariants}>
+          <StatCard
+            icon={<GiWeightLiftingUp className="text-blue-400 text-xl" />}
+            title="Trainers"
+            value={dashboardData.trainers.length}
+            description="Certified professionals"
+            color="blue"
+          />
+        </motion.div>
+        <motion.div variants={itemVariants}>
+          <StatCard
+            icon={<FaDollarSign className="text-amber-400 text-xl" />}
+            title="Revenue"
+            value={`$${
+              dashboardData.payments?.totalPaid?.toLocaleString() || 0
+            }`}
+            description="All-time earnings"
+            color="amber"
+          />
+        </motion.div>
+        <motion.div variants={itemVariants}>
+          <StatCard
+            icon={<FaUserTie className="text-purple-400 text-xl" />}
+            title="Avg. Sessions"
+            value={
+              dashboardData.payments?.last6Transactions?.length > 0
+                ? Math.round(
+                    dashboardData.payments.last6Transactions.length /
+                      dashboardData.trainers.length
+                  )
+                : 0
+            }
+            description="Per trainer"
+            color="purple"
+          />
+        </motion.div>
+      </motion.div>
 
       {/* Improved Compact Activity Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
+      <motion.div
+        className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4"
+        variants={containerVariants}
+      >
         {/* Mini Activity Chart */}
-        <div className="bg-gray-800 p-4 rounded-xl border border-gray-700">
+        <motion.div
+          variants={itemVariants}
+          whileHover={{ y: -5 }}
+          className="bg-gray-800 p-4 rounded-xl border border-gray-700"
+        >
           <div className="flex justify-between items-center mb-8">
             <h3 className="font-medium text-white flex items-center gap-2">
               <FaChartLine className="text-lime-400" />
@@ -141,7 +226,7 @@ const AdminDashboardHome = () => {
             </h3>
             <span className="text-xs text-gray-400">Last 30 days</span>
           </div>
-          <div className="h-40">
+          <motion.div className="h-40" variants={chartVariants}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={activityData}>
                 <XAxis
@@ -172,11 +257,15 @@ const AdminDashboardHome = () => {
                 />
               </BarChart>
             </ResponsiveContainer>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Compact Transactions */}
-        <div className="bg-gray-800 p-4 rounded-xl border border-gray-700">
+        <motion.div
+          variants={itemVariants}
+          whileHover={{ y: -5 }}
+          className="bg-gray-800 p-4 rounded-xl border border-gray-700"
+        >
           <div className="flex justify-between items-center mb-3">
             <h3 className="font-medium text-white flex items-center gap-2">
               <FaDollarSign className="text-blue-400" />
@@ -187,27 +276,18 @@ const AdminDashboardHome = () => {
               className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1"
             >
               View all
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
+              <IoIosArrowForward size={18} />
             </Link>
           </div>
           <div className="space-y-3">
             {recentTransactions.length > 0 ? (
-              recentTransactions.map((tx) => (
-                <div
+              recentTransactions.map((tx, index) => (
+                <motion.div
                   key={tx._id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 * index }}
+                  whileHover={{ scale: 1.02 }}
                   className="flex items-center justify-between p-3 hover:bg-gray-700/50 rounded-lg transition-colors"
                 >
                   <div className="flex items-center gap-3">
@@ -233,7 +313,7 @@ const AdminDashboardHome = () => {
                     </p>
                     <p className="text-gray-400 text-xs">{tx.trainer}</p>
                   </div>
-                </div>
+                </motion.div>
               ))
             ) : (
               <div className="text-center py-6 text-gray-400">
@@ -241,10 +321,14 @@ const AdminDashboardHome = () => {
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
 
         {/* Trainer Performance */}
-        <div className="bg-gray-800 p-4 rounded-xl border border-gray-700">
+        <motion.div
+          variants={itemVariants}
+          whileHover={{ y: -5 }}
+          className="bg-gray-800 p-4 rounded-xl border border-gray-700"
+        >
           <div className="flex justify-between items-center mb-3">
             <h3 className="font-medium text-white flex items-center gap-2">
               <GiWeightLiftingUp className="text-purple-400" />
@@ -254,28 +338,19 @@ const AdminDashboardHome = () => {
               to="/dashboard/allTrainers"
               className="text-purple-400 hover:text-purple-300 text-sm flex items-center gap-1"
             >
-              View all trainers{" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
+              View all trainers
+              <IoIosArrowForward size={18} />
             </Link>
           </div>
 
           <div className="space-y-3">
-            {dashboardData.trainers.slice(0, 3).map((trainer) => (
-              <div
+            {dashboardData.trainers.slice(0, 3).map((trainer, index) => (
+              <motion.div
                 key={trainer._id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 * index }}
+                whileHover={{ scale: 1.02 }}
                 className="flex items-center justify-between p-2 hover:bg-gray-700/50 rounded-lg transition-colors"
               >
                 <div className="flex items-center gap-3">
@@ -287,13 +362,17 @@ const AdminDashboardHome = () => {
                 <span className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
                   {trainer.specialization || "General"}
                 </span>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Recent Subscribers */}
-        <div className="bg-gray-800 p-4 rounded-xl border border-gray-700">
+        <motion.div
+          variants={itemVariants}
+          whileHover={{ y: -5 }}
+          className="bg-gray-800 p-4 rounded-xl border border-gray-700"
+        >
           <div className="flex justify-between items-center mb-3">
             <h3 className="font-medium text-white flex items-center gap-2">
               <FaEnvelope className="text-lime-400" />
@@ -303,29 +382,19 @@ const AdminDashboardHome = () => {
               to="/dashboard/subscribers"
               className="text-lime-400 hover:text-lime-300 text-sm flex items-center gap-1"
             >
-              View all subscribers{" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
+              View all subscribers
+              <IoIosArrowForward size={18} />
             </Link>
           </div>
 
-          <h3 className="font-medium text-white flex items-center gap-2 mb-3"></h3>
           <div className="space-y-3">
-            {dashboardData.subscribers.slice(0, 3).map((sub) => (
-              <div
+            {dashboardData.subscribers.slice(0, 3).map((sub, index) => (
+              <motion.div
                 key={sub._id}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 * index }}
+                whileHover={{ scale: 1.02 }}
                 className="flex items-center justify-between p-2 hover:bg-gray-700/50 rounded-lg transition-colors"
               >
                 <div className="flex items-center gap-3">
@@ -341,12 +410,12 @@ const AdminDashboardHome = () => {
                     year: "numeric",
                   })}
                 </span>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 };
 
