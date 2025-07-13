@@ -97,8 +97,11 @@ const DashboardLayout = () => {
 
   const navLinks = [
     { to: "/", label: "Home", icon: <FiHome /> },
-    { to: "/dashboard", label: "Dashboard", icon: <RiDashboardLine /> },
-
+    {
+      to: "/dashboard",
+      label: "Dashboard",
+      icon: <RiDashboardLine />,
+    },
     ...(!roleLoading && role === "admin" ? adminLinks : []),
 
     ...(!roleLoading && role === "trainer" ? trainerLinks : []),
@@ -187,6 +190,7 @@ const DashboardLayout = () => {
               <nav className="flex flex-col p-2 gap-1 flex-1 overflow-y-auto">
                 {navLinks.map((link) => (
                   <NavLink
+                    end={link.to === "/dashboard"}
                     key={link.to}
                     to={link.to}
                     onClick={() => setMobileSidebarOpen(false)}
@@ -261,6 +265,7 @@ const DashboardLayout = () => {
         <nav className="flex flex-col p-2 xl:p-4 gap-1 flex-1 overflow-y-auto">
           {navLinks.map((link) => (
             <NavLink
+              end={link.to === "/dashboard"}
               key={link.to}
               to={link.to}
               data-tooltip-id="sidebar-tooltip"

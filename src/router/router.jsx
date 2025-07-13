@@ -22,6 +22,7 @@ import TrainerApplicationDetail from "../pages/Admin/TrainerApplicationDetail";
 import TrainersDetails from "../pages/TrainersDetails/TrainersDetails";
 import TrainerBookPage from "../pages/TrainerBookPage/TrainerBookPage";
 import PaymentLayout from "../pages/Payment/PaymentLayout";
+import AdminDashboardHome from "../pages/Admin/AdminDashboardHome";
 
 const router = createBrowserRouter([
   {
@@ -87,6 +88,14 @@ const router = createBrowserRouter([
     ),
     children: [
       // Admin Route
+      {
+        index: true,
+        element: (
+          <AdminRoute>
+            <AdminDashboardHome></AdminDashboardHome>
+          </AdminRoute>
+        ),
+      },
       {
         path: "subscribers",
         element: (
