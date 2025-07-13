@@ -13,15 +13,19 @@ import Loading from "../../Shared/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { fadeIn, staggerContainer, slideIn, zoomIn } from "../../utils/motion";
+import useAuth from "../../Hooks/useAuth";
+import toastMessage from "../../utils/toastMessage";
 
 const TrainerBookPage = () => {
   const location = useLocation();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const queryParams = new URLSearchParams(location.search);
   const day = queryParams.get("day");
   const time = queryParams.get("time");
+  const classId = queryParams.get("classId");
 
   const {
     data: trainer = {},
@@ -136,14 +140,27 @@ const TrainerBookPage = () => {
   }
 
   const handleSelectPlan = (pkg) => {
-    const params = new URLSearchParams({
+    const paymentHistory = {
+      trainerId: id,
       trainer: trainer.name,
       day,
       time,
       package: pkg.name,
       price: pkg.price,
-    });
-    navigate(`/payment?${params.toString()}`);
+      paymentStatus: "pending",
+    };
+    if (!classId) {
+      paymentHistory.classId = classId;
+    }
+
+    axiosSecure
+      .patch(`/users/activity/${user.email}`, paymentHistory)
+      .then((res) => {
+        navigate(`/payment/${res.data.upsertedId}`);
+      })
+      .catch((err) => {
+        err && toastMessage("Something wen't wrong please try again", "error");
+      });
   };
 
   return (

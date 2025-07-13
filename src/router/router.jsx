@@ -21,6 +21,7 @@ import BeTrainer from "../pages/BeTrainer/BeTrainer";
 import TrainerApplicationDetail from "../pages/Admin/TrainerApplicationDetail";
 import TrainersDetails from "../pages/TrainersDetails/TrainersDetails";
 import TrainerBookPage from "../pages/TrainerBookPage/TrainerBookPage";
+import PaymentLayout from "../pages/Payment/PaymentLayout";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <TrainerBookPage></TrainerBookPage>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/payment/:id",
+        element: (
+          <PrivateRoute>
+            <PaymentLayout />
           </PrivateRoute>
         ),
       },

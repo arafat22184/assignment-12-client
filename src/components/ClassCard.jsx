@@ -113,7 +113,7 @@ const ClassCard = ({ classItem }) => {
             <div className="flex flex-wrap gap-3">
               {trainers.map((trainer) => (
                 <Link
-                  to={`/trainers/${trainer._id}`}
+                  to={`/trainers/${trainer._id}?classId=${classItem._id}`}
                   key={trainer._id}
                   className="group relative"
                 >

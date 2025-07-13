@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams, Link } from "react-router";
+import { useParams, Link, useLocation } from "react-router";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import {
   FaFacebook,
@@ -16,8 +16,9 @@ import BecomeTrainerCTA from "../../components/BecomeTrainerCTA";
 
 const TrainersDetails = () => {
   const { id } = useParams();
+  const location = useLocation();
+  const classId = new URLSearchParams(location.search).get("classId");
   const axiosSecure = useAxiosSecure();
-
   const { data: trainer = {}, isLoading } = useQuery({
     queryKey: ["trainer-by-id", id],
     queryFn: async () => {
@@ -159,7 +160,7 @@ const TrainersDetails = () => {
                       (time, timeIndex) => (
                         <Link
                           key={timeIndex}
-                          to={`/book-trainer/${trainer._id}?day=${day}&time=${time}`}
+                          to={`/book-trainer/${trainer._id}?day=${day}&time=${time}&classId=${classId}`}
                           className="bg-lime-400 hover:bg-lime-500 text-gray-900 font-medium py-2 px-4 rounded text-sm transition-colors whitespace-nowrap"
                         >
                           {time}
