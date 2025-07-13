@@ -188,7 +188,7 @@ const TrainerBookPage = () => {
       userImage: user.photoURL,
       userEmail: user.email,
     };
-    if (!classId) {
+    if (classId) {
       paymentHistory.classId = classId;
     }
 
