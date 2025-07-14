@@ -69,7 +69,7 @@ const FeaturedClasses = () => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-100px" }}
-      className="py-16 px-4 md:px-10 max-w-7xl mx-auto relative overflow-hidden"
+      className="pt-16 px-4 md:px-10 max-w-7xl mx-auto relative overflow-hidden"
     >
       {/* Animated Background Elements */}
       <motion.div

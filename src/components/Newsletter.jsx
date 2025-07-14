@@ -49,7 +49,7 @@ const Newsletter = () => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-100px" }}
-      className="relative px-4 lg:px-0 overflow-hidden"
+      className="relative px-4 pb-16 lg:px-0 overflow-hidden"
     >
       {/* Background Elements */}
       <motion.div
