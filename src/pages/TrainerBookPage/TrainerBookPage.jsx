@@ -98,7 +98,7 @@ const TrainerBookPage = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="min-h-screen flex items-center justify-center"
+        className="pt-24 pb-16 flex items-center justify-center"
       >
         <motion.div
           variants={zoomIn(0.2, 1)}
@@ -132,7 +132,7 @@ const TrainerBookPage = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="min-h-screen flex items-center justify-center"
+        className="pt-24 pb-16 flex items-center justify-center"
       >
         <motion.div
           variants={zoomIn(0.2, 1)}
@@ -207,7 +207,7 @@ const TrainerBookPage = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen pb-12 pt-24 px-4"
+      className="pb-16 pt-24 px-4"
     >
       <div className="max-w-4xl mx-auto">
         <motion.div

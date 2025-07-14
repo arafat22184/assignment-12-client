@@ -42,7 +42,7 @@ const PaymentLayout = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen pb-12 pt-24 px-4"
+      className="pb-12 pt-24 px-4"
     >
       <div className="max-w-4xl mx-auto">
         <div className="bg-gray-800 rounded-xl p-8 border border-lime-400/20">

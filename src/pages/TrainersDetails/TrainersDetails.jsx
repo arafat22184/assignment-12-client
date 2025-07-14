@@ -30,7 +30,7 @@ const TrainersDetails = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className=" min-h-screen pt-24 pb-20 px-4">
+    <div className=" pt-24 pb-16 px-4">
       <div className="max-w-6xl mx-auto">
         <BecomeTrainerCTA></BecomeTrainerCTA>
         {/* Main Content */}
