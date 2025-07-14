@@ -180,6 +180,7 @@ const TrainerBookPage = () => {
     const paymentHistory = {
       trainerId: id,
       trainer: trainer.name,
+      trainerImage: trainer.photoURL,
       day,
       time,
       package: pkg.name,

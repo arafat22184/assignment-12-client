@@ -23,6 +23,10 @@ import TrainersDetails from "../pages/TrainersDetails/TrainersDetails";
 import TrainerBookPage from "../pages/TrainerBookPage/TrainerBookPage";
 import PaymentLayout from "../pages/Payment/PaymentLayout";
 import DashboardHome from "../pages/DashboardHome/DashboardHome";
+import ActivityLog from "../pages/Member/ActivityLog";
+import MemberRoute from "../routes/MemberRoute";
+import BookedTrainer from "../pages/Member/BookedTrainer";
+import Profile from "../pages/Member/Profile";
 
 const router = createBrowserRouter([
   {
@@ -168,6 +172,31 @@ const router = createBrowserRouter([
           <TrainerRoute>
             <AddForum></AddForum>
           </TrainerRoute>
+        ),
+      },
+      // Member Routes
+      {
+        path: "activityLog",
+        element: (
+          <MemberRoute>
+            <ActivityLog></ActivityLog>
+          </MemberRoute>
+        ),
+      },
+      {
+        path: "bookedTrainer",
+        element: (
+          <MemberRoute>
+            <BookedTrainer></BookedTrainer>
+          </MemberRoute>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <MemberRoute>
+            <Profile></Profile>
+          </MemberRoute>
         ),
       },
     ],
