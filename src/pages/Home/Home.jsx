@@ -4,6 +4,7 @@ import Featured from "../../components/Featured";
 import About from "../../components/About";
 import Newsletter from "../../components/Newsletter";
 import FeaturedClasses from "../../components/FeaturedClasses";
+import Team from "../../components/Team";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <FeaturedClasses></FeaturedClasses>
       <About></About>
       <Newsletter></Newsletter>
+      <Team></Team>
     </div>
   );
 };
