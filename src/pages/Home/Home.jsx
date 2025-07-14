@@ -3,6 +3,7 @@ import Banner from "../../components/Banner";
 import Featured from "../../components/Featured";
 import About from "../../components/About";
 import Newsletter from "../../components/Newsletter";
+import FeaturedClasses from "../../components/FeaturedClasses";
 
 const Home = () => {
   return (
@@ -11,6 +12,7 @@ const Home = () => {
       <Featured></Featured>
       <About></About>
       <Newsletter></Newsletter>
+      <FeaturedClasses></FeaturedClasses>
     </div>
   );
 };
