@@ -50,17 +50,17 @@ const features = [
 
 const Featured = () => {
   return (
-    <section className="text-white py-16 px-4 md:px-10 max-w-7xl mx-auto">
+    <section className="text-white py-16 px-4 xl:px-0 max-w-7xl mx-auto">
       <div className="text-center">
         <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-lime-400 to-emerald-400 bg-clip-text text-transparent">
           Why Choose <span className="text-lime-400">FitForge?</span>
         </h2>
-        <p className="text-gray-300 mb-12 max-w-2xl mx-auto">
+        <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
           FitForge empowers your fitness journey with powerful tools, expert
           guidance, and a community that cares.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {features.map((feature, index) => (
             <motion.div
               key={index}

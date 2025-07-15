@@ -69,7 +69,7 @@ const FeaturedClasses = () => {
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-100px" }}
-      className="pt-16 px-4 md:px-10 max-w-7xl mx-auto relative overflow-hidden"
+      className="px-4 xl:px-0 max-w-7xl mx-auto relative overflow-hidden"
     >
       {/* Animated Background Elements */}
       <motion.div
@@ -101,7 +101,7 @@ const FeaturedClasses = () => {
       />
 
       {/* Section Header */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-6">
         <motion.h2
           initial={{ y: -30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -139,7 +139,7 @@ const FeaturedClasses = () => {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, margin: "-50px" }}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6"
       >
         <AnimatePresence>
           {featuredClasses.map((classItem, index) => (
@@ -246,13 +246,14 @@ const FeaturedClasses = () => {
           stiffness: 100,
         }}
         viewport={{ once: true }}
-        className="text-center mt-12"
+        className="text-center mt-6"
       >
         <Link
           to="/classes"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-lime-500 to-emerald-500 hover:from-lime-600 hover:to-emerald-600 text-black font-semibold px-6 py-3 rounded-lg transition-all hover:shadow-lg hover:shadow-lime-400/20"
+          className="inline-flex items-center gap-2 bg-transparent border border-lime-400 hover:bg-lime-400/10 text-lime-400 font-semibold px-6 py-3 rounded-lg transition-all hover:shadow-lg hover:shadow-lime-400/20 group"
         >
-          View All Classes <FaArrowRight className="ml-1" />
+          View All Classes
+          <FaArrowRight className="ml-1" />
         </Link>
       </motion.div>
     </motion.section>

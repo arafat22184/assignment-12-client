@@ -49,7 +49,7 @@ const Newsletter = () => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-100px" }}
-      className="relative px-4 pb-16 lg:px-0 overflow-hidden"
+      className="relative px-4 pb-16 xl:px-0 overflow-hidden"
     >
       {/* Background Elements */}
       <motion.div
@@ -75,7 +75,7 @@ const Newsletter = () => {
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-6"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-lime-400 to-emerald-400 bg-clip-text text-transparent">
             Elevate Your Fitness Journey

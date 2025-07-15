@@ -11,6 +11,7 @@ import {
 import { FaFire } from "react-icons/fa6";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
 import Loading from "../Shared/Loading";
+import { Link } from "react-router";
 
 const TeamSection = () => {
   const axiosSecure = useAxiosSecure();
@@ -77,7 +78,7 @@ const TeamSection = () => {
       whileInView="show"
       viewport={{ once: true, margin: "-100px" }}
       variants={container}
-      className="pb-16 px-4 md:px-10 max-w-7xl mx-auto relative overflow-hidden"
+      className="pb-16 px-4 xl:px-0  max-w-7xl mx-auto relative overflow-hidden"
     >
       {/* Animated background elements */}
       <motion.div
@@ -91,7 +92,7 @@ const TeamSection = () => {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-lime-400 blur-3xl -z-10"
+        className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-lime-400 blur-3xl z-10"
       />
       <motion.div
         animate={{
@@ -109,7 +110,7 @@ const TeamSection = () => {
       />
 
       {/* Section header */}
-      <div className="text-center mb-16">
+      <div className="text-center mb-6">
         <motion.h2
           initial={{ y: -30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
@@ -141,7 +142,7 @@ const TeamSection = () => {
       </div>
 
       {/* Trainers grid */}
-      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
         {trainers.map((trainer, index) => (
           <motion.div
             key={trainer._id}
@@ -285,17 +286,17 @@ const TeamSection = () => {
           stiffness: 100,
         }}
         viewport={{ once: true }}
-        className="text-center mt-16"
+        className="text-center mt-6"
       >
-        <a
-          href="/trainers"
+        <Link
+          to="/trainers"
           className="inline-flex items-center gap-2 bg-transparent border border-lime-400 hover:bg-lime-400/10 text-lime-400 font-semibold px-6 py-3 rounded-lg transition-all hover:shadow-lg hover:shadow-lime-400/20 group"
         >
           Meet All Our Trainers
           <span className="group-hover:translate-x-1 transition-transform">
             &rarr;
           </span>
-        </a>
+        </Link>
       </motion.div>
     </motion.section>
   );

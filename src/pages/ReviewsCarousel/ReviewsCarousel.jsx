@@ -110,7 +110,7 @@ const ReviewsCarousel = () => {
 
   return (
     <motion.section
-      className="relative pb-16 px-4 md:px-8 max-w-7xl mx-auto"
+      className="relative pb-16 px-4 xl:px-0 max-w-7xl mx-auto"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, margin: "-100px" }}

@@ -10,7 +10,7 @@ import image from "../assets/personalized-workouts-animate.svg";
 
 const About = () => {
   return (
-    <section className="px-6 text-white flex items-center justify-center max-w-6xl mx-auto">
+    <section className="px-6 text-white flex items-center justify-center max-w-6xl mx-auto mt-16 md:mt-0">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
