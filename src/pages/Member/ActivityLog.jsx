@@ -232,9 +232,11 @@ const ActivityLog = () => {
                         </div>
                       </td>
                       <td className="px-4 py-4 whitespace-nowrap">
-                        <div className="text-sm text-white">{payment.day}</div>
+                        <div className="text-sm text-white">
+                          {payment.slot.day}
+                        </div>
                         <div className="text-sm text-gray-300">
-                          {payment.time}
+                          {payment.slot.time}
                         </div>
                       </td>
                       <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-300">

@@ -9,14 +9,9 @@ import {
   FaChalkboardTeacher,
   FaCertificate,
 } from "react-icons/fa";
-import {
-  MdFitnessCenter,
-  MdOutlineAccountCircle,
-  MdEmail,
-  MdDateRange,
-} from "react-icons/md";
-import { GiGymBag, GiWeightLiftingUp } from "react-icons/gi";
-import { IoMdPerson, IoMdPeople } from "react-icons/io";
+import { MdEmail, MdDateRange } from "react-icons/md";
+import { GiWeightLiftingUp } from "react-icons/gi";
+import { IoMdPeople } from "react-icons/io";
 import { RiUserSettingsLine, RiContactsBookLine } from "react-icons/ri";
 import { BsActivity, BsCalendar2Event } from "react-icons/bs";
 import Swal from "sweetalert2";
@@ -85,7 +80,6 @@ const AllTrainers = () => {
         Failed to load trainers
       </div>
     );
-
   return (
     <div className="p-4 sm:p-6 bg-gray-900 rounded-xl border border-gray-800 shadow-lg">
       {/* Header */}
@@ -182,13 +176,19 @@ const AllTrainers = () => {
                   <td className="py-3 px-4 text-gray-400 text-sm">
                     <div className="flex items-center gap-1">
                       <FaRegClock className="text-xs text-lime-400" />
-                      {formatDistanceToNow(new Date(trainer.lastLogin))} ago
+                      {formatDistanceToNow(
+                        new Date(trainer.activityLog.lastLogin)
+                      )}{" "}
+                      ago
                     </div>
                   </td>
                   <td className="py-3 px-4 text-gray-400 text-sm">
                     <div className="flex items-center gap-1">
                       <MdDateRange className="text-lime-400" />
-                      {format(new Date(trainer.createdAt), "MMM dd, yyyy")}
+                      {format(
+                        new Date(trainer.activityLog.createdAt),
+                        "MMM dd, yyyy"
+                      )}
                     </div>
                   </td>
                   <td className="py-3 px-4 text-center">

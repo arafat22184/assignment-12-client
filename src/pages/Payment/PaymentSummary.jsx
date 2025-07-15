@@ -8,8 +8,7 @@ import {
 
 const PaymentSummary = ({
   trainer,
-  day,
-  time,
+  slot,
   price,
   user,
   package: packageName,
@@ -27,12 +26,12 @@ const PaymentSummary = ({
         <SummaryItem
           icon={<FaCalendarDay className="text-lime-400 text-lg" />}
           label="Day"
-          value={day}
+          value={slot.day}
         />
         <SummaryItem
           icon={<FaClock className="text-lime-400 text-lg" />}
           label="Time"
-          value={time}
+          value={slot.time}
         />
         <SummaryItem
           icon={<FaBox className="text-lime-400 text-lg" />}

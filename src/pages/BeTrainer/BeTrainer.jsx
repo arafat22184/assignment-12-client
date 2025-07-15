@@ -43,6 +43,12 @@ const BeTrainer = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
+  const slots = selectedDays.flatMap((dayObj) =>
+    selectedTimeSlots.map((timeObj) => ({
+      day: dayObj.value,
+      time: timeObj.value,
+    }))
+  );
   const {
     register,
     handleSubmit,
@@ -121,14 +127,7 @@ const BeTrainer = () => {
       formData.append("age", data.age);
       formData.append("experience", data.experience);
       formData.append("certifications", data.certifications);
-      formData.append(
-        "availableDays",
-        JSON.stringify(selectedDays.map((day) => day.value))
-      );
-      formData.append(
-        "availableTimeSlots",
-        JSON.stringify(selectedTimeSlots.map((time) => time.value))
-      );
+      formData.append("slots", JSON.stringify(slots || []));
       formData.append("skills", JSON.stringify(data.skills || []));
       formData.append("facebook", data.facebook || "");
       formData.append("instagram", data.instagram || "");
@@ -184,6 +183,7 @@ const BeTrainer = () => {
           // Reset form state
           setSelectedDays([]);
           setSelectedTimeSlots([]);
+
           reset({
             email: user?.email || "",
             name: user?.displayName || "",
@@ -281,18 +281,24 @@ const BeTrainer = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-4">
-              <div>
-                <p className="text-gray-300 mb-2">
-                  <span className="font-semibold">Available Days:</span>{" "}
-                  {application.availableDays.join(", ")}
-                </p>
-              </div>
-              <div>
-                <p className="text-gray-300 mb-2">
-                  <span className="font-semibold">Available Time Slots:</span>{" "}
-                  {application.availableTimeSlots.join(", ")}
-                </p>
+            <div className="mb-4">
+              <p className="text-gray-300 font-semibold mb-2">
+                Available Slots:
+              </p>
+              <div className="bg-gray-700 p-4 rounded-lg space-y-2">
+                {application.slots &&
+                  Object.entries(
+                    application.slots.reduce((acc, slot) => {
+                      if (!acc[slot.day]) acc[slot.day] = [];
+                      acc[slot.day].push(slot.time);
+                      return acc;
+                    }, {})
+                  ).map(([day, times]) => (
+                    <p key={day} className="text-gray-300">
+                      <span className="font-semibold">{day}:</span>{" "}
+                      {times.join(", ")}
+                    </p>
+                  ))}
               </div>
             </div>
 

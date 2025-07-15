@@ -14,6 +14,8 @@ const PaymentLayout = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
+  console.log(id);
+
   const { data: bookingDetails = {}, isLoading: bookingDataLoading } = useQuery(
     {
       queryKey: ["paymentData", id],
@@ -29,8 +31,7 @@ const PaymentLayout = () => {
   // Validate required params
   if (
     !bookingDetails.trainer ||
-    !bookingDetails.day ||
-    !bookingDetails.time ||
+    !bookingDetails.slot ||
     !bookingDetails.package ||
     !bookingDetails.price
   ) {

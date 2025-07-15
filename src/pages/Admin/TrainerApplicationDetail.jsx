@@ -214,17 +214,15 @@ const TrainerApplicationDetail = () => {
                   <span>Available Days</span>
                 </h3>
                 <div className="space-y-2">
-                  {application.trainerApplication?.availableDays.map(
-                    (day, i) => (
-                      <div
-                        key={i}
-                        className="flex items-center gap-2 text-gray-300"
-                      >
-                        <FaClock className="text-lime-400 text-sm" />
-                        <span>{day}</span>
-                      </div>
-                    )
-                  )}
+                  {application.trainerApplication?.slots.map((slot, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-2 text-gray-300"
+                    >
+                      <FaClock className="text-lime-400 text-sm" />
+                      <span>{slot.day}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -234,17 +232,15 @@ const TrainerApplicationDetail = () => {
                   <span>Available Time Slots</span>
                 </h3>
                 <div className="space-y-2">
-                  {application.trainerApplication?.availableTimeSlots.map(
-                    (time, i) => (
-                      <div
-                        key={i}
-                        className="flex items-center gap-2 text-gray-300"
-                      >
-                        <FaClock className="text-lime-400 text-sm" />
-                        <span>{time}</span>
-                      </div>
-                    )
-                  )}
+                  {application.trainerApplication?.slots.map((slot, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-2 text-gray-300"
+                    >
+                      <FaClock className="text-lime-400 text-sm" />
+                      <span>{slot.time}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

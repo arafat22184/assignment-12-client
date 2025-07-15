@@ -6,8 +6,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 const PaymentFormContainer = ({
   trainer,
-  day,
-  time,
+  slot,
   package: packageName,
   price,
   user,
@@ -24,8 +23,8 @@ const PaymentFormContainer = ({
         <Elements stripe={stripePromise}>
           <StripePaymentForm
             trainer={trainer}
-            day={day}
-            time={time}
+            day={slot.day}
+            time={slot.time}
             packageName={packageName}
             price={price}
             user={user}

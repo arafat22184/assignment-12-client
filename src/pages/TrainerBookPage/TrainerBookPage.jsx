@@ -4,7 +4,6 @@ import {
   FaCheck,
   FaArrowRight,
   FaUserAlt,
-  FaClock,
   FaCalendarDay,
   FaExclamationTriangle,
   FaTimes,
@@ -26,10 +25,21 @@ const TrainerBookPage = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const queryParams = new URLSearchParams(location.search);
-  const day = queryParams.get("day");
-  const time = queryParams.get("time");
+  const slotParam = queryParams.get("slot");
   const classId = queryParams.get("classId");
   const { role: userRole } = useUserRole();
+
+  // Parse the slot parameter into day and time
+  let day = "";
+  let time = "";
+  if (slotParam) {
+    // Find the first space to separate day and time
+    const firstSpaceIndex = slotParam.indexOf(" ");
+    if (firstSpaceIndex !== -1) {
+      day = slotParam.substring(0, firstSpaceIndex);
+      time = slotParam.substring(firstSpaceIndex + 1);
+    }
+  }
 
   const {
     data: trainer = {},
@@ -73,18 +83,21 @@ const TrainerBookPage = () => {
     },
   ];
 
-  // Check if the current slot is already booked by the user
+  // Check if the current slot is already booked by the user - UPDATED
   const isSlotBooked = (pkgName) => {
-    if (!trainer.activityLog?.bookedSlots || !user?.email) return false;
+    if (!trainer.activityLog?.bookedSlots || !user?.email) {
+      return false;
+    }
 
-    return trainer.activityLog.bookedSlots.some(
-      (slot) =>
-        slot.trainerId === id &&
-        slot.day === day &&
-        slot.time === time &&
-        slot.package === pkgName &&
-        slot.userEmail === user.email
-    );
+    return trainer.activityLog.bookedSlots.some((slot) => {
+      // Compare both day and time separately
+      const sameDay = slot.slot.day === day;
+      const sameTime = slot.slot.time === time;
+      const samePackage = slot.package === pkgName;
+      const sameUser = slot.userEmail === user.email;
+
+      return sameDay && sameTime && samePackage && sameUser;
+    });
   };
 
   // Check if user is admin or trainer
@@ -126,7 +139,7 @@ const TrainerBookPage = () => {
     );
   }
 
-  if (!day || !time) {
+  if (!slotParam || !day || !time) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -160,6 +173,8 @@ const TrainerBookPage = () => {
     );
   }
 
+  const slot = { day, time };
+
   const handleSelectPlan = (pkg) => {
     if (isAdminOrTrainer) {
       toastMessage(
@@ -181,15 +196,15 @@ const TrainerBookPage = () => {
       trainerId: id,
       trainer: trainer.name,
       trainerImage: trainer.photoURL,
-      trainerSkills: trainer.trainerApplication.skills,
-      day,
-      time,
+      trainerSkills: trainer.trainerApplication?.skills || [],
+      slot: slot,
       package: pkg.name,
       price: pkg.price,
       paymentStatus: "pending",
       userImage: user.photoURL,
       userEmail: user.email,
     };
+
     if (classId) {
       paymentHistory.classId = classId;
     }
@@ -200,7 +215,7 @@ const TrainerBookPage = () => {
         navigate(`/payment/${res.data.upsertedId}`);
       })
       .catch((err) => {
-        err && toastMessage("Something wen't wrong please try again", "error");
+        err && toastMessage("Something went wrong please try again", "error");
       });
   };
 
@@ -250,14 +265,14 @@ const TrainerBookPage = () => {
                   </h2>
                 </div>
 
-                <div className="flex items-center gap-3 text-gray-300">
-                  <FaCalendarDay className="text-lime-400" />
-                  <span className="font-medium">{day}</span>
-                </div>
-
-                <div className="flex items-center gap-3 text-gray-300">
-                  <FaClock className="text-lime-400" />
-                  <span className="font-medium">{time}</span>
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-3 text-gray-300">
+                    <FaCalendarDay className="text-lime-400" />
+                    <span className="font-medium">Selected Slot:</span>
+                  </div>
+                  <div className="ml-6 mt-1 bg-gray-700/50 px-4 py-2 rounded-lg">
+                    <span className="font-medium text-white">{slotParam}</span>
+                  </div>
                 </div>
 
                 <div className="pt-2">

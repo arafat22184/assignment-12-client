@@ -214,10 +214,10 @@ const MemberDashboardHome = () => {
                     </h3>
                     <div className="flex flex-wrap gap-2 mt-1">
                       <span className="text-sm bg-gray-700 text-gray-300 px-2 py-1 rounded">
-                        {booking.day}
+                        {booking.slot.day}
                       </span>
                       <span className="text-sm bg-gray-700 text-gray-300 px-2 py-1 rounded">
-                        {booking.time}
+                        {booking.slot.time}
                       </span>
                     </div>
                   </div>

@@ -453,10 +453,10 @@ const Balance = () => {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center gap-2">
                         <span className="text-sm text-white">
-                          {transaction.day}
+                          {transaction.slot.day}
                         </span>
                         <span className="text-xs text-gray-400 bg-gray-700 px-1.5 py-0.5 rounded">
-                          {transaction.time}
+                          {transaction.slot.time}
                         </span>
                       </div>
                     </td>

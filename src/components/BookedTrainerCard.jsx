@@ -140,8 +140,12 @@ const SessionDetails = ({ trainer }) => (
         label="Package"
         value={trainer.package}
       />
-      <DetailItem icon={<FaCalendarAlt />} label="Day" value={trainer.day} />
-      <DetailItem icon={<FaClock />} label="Time" value={trainer.time} />
+      <DetailItem
+        icon={<FaCalendarAlt />}
+        label="Day"
+        value={trainer.slot.day}
+      />
+      <DetailItem icon={<FaClock />} label="Time" value={trainer.slot.time} />
       <DetailItem icon={<FaDollarSign />} label="Price" value={trainer.price} />
     </div>
   </div>

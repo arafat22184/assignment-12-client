@@ -132,17 +132,17 @@ const AllTrainersHome = () => {
                   <FaCalendarAlt className="text-lime-400" />
                   <div>
                     <p className="text-white">
-                      {trainer.trainerApplication?.availableDays
-                        ?.slice(0, 2)
+                      {trainer.trainerApplication?.slots
+                        .map((slot) => slot.day)
                         .join(", ")}
                       {trainer.trainerApplication?.availableDays?.length > 2
                         ? "..."
                         : ""}
                     </p>
                     <p className="text-gray-400 text-xs">
-                      {trainer.trainerApplication?.availableTimeSlots?.join(
-                        ", "
-                      )}
+                      {trainer.trainerApplication?.slots
+                        ?.map((slot) => slot.time)
+                        .join(", ")}
                     </p>
                   </div>
                 </div>
