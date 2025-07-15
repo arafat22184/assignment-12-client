@@ -181,6 +181,7 @@ const TrainerBookPage = () => {
       trainerId: id,
       trainer: trainer.name,
       trainerImage: trainer.photoURL,
+      trainerSkills: trainer.trainerApplication.skills,
       day,
       time,
       package: pkg.name,

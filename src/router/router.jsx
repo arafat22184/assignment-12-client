@@ -25,8 +25,8 @@ import PaymentLayout from "../pages/Payment/PaymentLayout";
 import DashboardHome from "../pages/DashboardHome/DashboardHome";
 import ActivityLog from "../pages/Member/ActivityLog";
 import MemberRoute from "../routes/MemberRoute";
-import BookedTrainer from "../pages/Member/BookedTrainer";
 import Profile from "../pages/Member/Profile";
+import BookedTrainers from "../pages/Member/BookedTrainers";
 
 const router = createBrowserRouter([
   {
@@ -187,7 +187,7 @@ const router = createBrowserRouter([
         path: "bookedTrainer",
         element: (
           <MemberRoute>
-            <BookedTrainer></BookedTrainer>
+            <BookedTrainers></BookedTrainers>
           </MemberRoute>
         ),
       },
