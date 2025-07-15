@@ -5,6 +5,7 @@ import About from "../../components/About";
 import Newsletter from "../../components/Newsletter";
 import FeaturedClasses from "../../components/FeaturedClasses";
 import Team from "../../components/Team";
+import ReviewsCarousel from "../ReviewsCarousel/ReviewsCarousel";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <About></About>
       <Newsletter></Newsletter>
       <Team></Team>
+      <ReviewsCarousel></ReviewsCarousel>
     </div>
   );
 };
