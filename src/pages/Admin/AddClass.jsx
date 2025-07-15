@@ -2,9 +2,22 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { FaImage } from "react-icons/fa";
-import { MdFitnessCenter, MdOutlineDescription } from "react-icons/md";
-import { GiWeightLiftingUp } from "react-icons/gi";
+import {
+  FaImage,
+  FaDumbbell,
+  FaRunning,
+  FaMedal,
+  FaYinYang,
+} from "react-icons/fa";
+import {
+  MdFitnessCenter,
+  MdOutlineDescription,
+  MdOutlineCategory,
+  MdOutlineSpeed,
+  MdOutlineConstruction,
+  MdAddCircleOutline,
+} from "react-icons/md";
+import { GiWeightLiftingUp, GiMeditation } from "react-icons/gi";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toastMessage from "../../utils/toastMessage";
@@ -20,14 +33,46 @@ const AddClass = () => {
   const [showSkillError, setShowSkillError] = useState(false);
 
   const skillOptions = [
-    { value: "strength", label: "Strength Training" },
-    { value: "cardio", label: "Cardio" },
-    { value: "flexibility", label: "Flexibility & Mobility" },
-    { value: "endurance", label: "Endurance" },
-    { value: "yoga", label: "Yoga & Mindfulness" },
-    { value: "bodybuilding", label: "Bodybuilding" },
-    { value: "weightlifting", label: "Weight Lifting" },
-    { value: "meditation", label: "Meditation" },
+    {
+      value: "strength",
+      label: "Strength Training",
+      icon: <GiWeightLiftingUp className="inline mr-2" />,
+    },
+    {
+      value: "cardio",
+      label: "Cardio",
+      icon: <FaRunning className="inline mr-2" />,
+    },
+    {
+      value: "flexibility",
+      label: "Flexibility & Mobility",
+      icon: <FaYinYang className="inline mr-2" />,
+    },
+    {
+      value: "endurance",
+      label: "Endurance",
+      icon: <FaMedal className="inline mr-2" />,
+    },
+    {
+      value: "yoga",
+      label: "Yoga & Mindfulness",
+      icon: <GiMeditation className="inline mr-2" />,
+    },
+    {
+      value: "bodybuilding",
+      label: "Bodybuilding",
+      icon: <FaDumbbell className="inline mr-2" />,
+    },
+    {
+      value: "weightlifting",
+      label: "Weight Lifting",
+      icon: <GiWeightLiftingUp className="inline mr-2" />,
+    },
+    {
+      value: "meditation",
+      label: "Meditation",
+      icon: <GiMeditation className="inline mr-2" />,
+    },
   ];
 
   const {
@@ -200,7 +245,8 @@ const AddClass = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Class Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">
+          <label className="text-sm font-medium text-gray-300 mb-1 flex items-center gap-2">
+            <MdFitnessCenter className="text-gray-300" />
             Class Name <span className="text-red-400">*</span>
           </label>
           <div className="relative">
@@ -229,7 +275,8 @@ const AddClass = () => {
 
         {/* Class Image Upload */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">
+          <label className="text-sm font-medium text-gray-300 mb-1 flex items-center gap-2">
+            <FaImage className="text-gray-300" />
             Class Image <span className="text-red-400">*</span>
           </label>
           <div className="flex items-center gap-4">
@@ -265,7 +312,8 @@ const AddClass = () => {
 
         {/* Skills Section */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">
+          <label className="text-sm font-medium text-gray-300 mb-1 flex items-center gap-2">
+            <MdOutlineCategory className="text-gray-300" />
             Skills Focus <span className="text-red-400">*</span>
           </label>
           <Select
@@ -281,6 +329,12 @@ const AddClass = () => {
             styles={customStyles}
             placeholder="Select skills this class focuses on..."
             isSearchable
+            formatOptionLabel={({ label, icon }) => (
+              <div className="flex items-center">
+                {icon}
+                {label}
+              </div>
+            )}
           />
           {showSkillError && (
             <p className="text-red-400 text-sm mt-1">
@@ -291,7 +345,8 @@ const AddClass = () => {
 
         {/* Description */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">
+          <label className="text-sm font-medium text-gray-300 mb-1 flex items-center gap-2">
+            <MdOutlineDescription className="text-gray-300" />
             Class Description <span className="text-red-400">*</span>
           </label>
           <div className="relative">
@@ -324,7 +379,8 @@ const AddClass = () => {
 
         {/* Difficulty Level */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">
+          <label className="text-sm font-medium text-gray-300 mb-1 flex items-center gap-2">
+            <MdOutlineSpeed className="text-gray-300" />
             Difficulty Level <span className="text-red-400">*</span>
           </label>
           <select
@@ -348,7 +404,8 @@ const AddClass = () => {
 
         {/* Equipment Needed */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">
+          <label className="text-sm font-medium text-gray-300 mb-1 flex items-center gap-2">
+            <MdOutlineConstruction className="text-gray-300" />
             Equipment Needed
           </label>
           <input
@@ -396,7 +453,7 @@ const AddClass = () => {
               </>
             ) : (
               <>
-                <MdFitnessCenter className="text-lg" />
+                <MdAddCircleOutline className="text-lg" />
                 <span>Add Class</span>
               </>
             )}
