@@ -25,8 +25,6 @@ const MainLayout = () => {
         pauseOnHover
         theme="light"
       />
-
-      {/* Back to top button */}
     </div>
   );
 };

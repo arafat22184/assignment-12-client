@@ -24,6 +24,7 @@ import {
 import { RiDashboardLine } from "react-icons/ri";
 import useUserRole from "../Hooks/useUserRole";
 import toastMessage from "../utils/toastMessage";
+import { ToastContainer } from "react-toastify";
 
 const DashboardLayout = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -332,6 +333,19 @@ const DashboardLayout = () => {
           </motion.div>
         </div>
       </main>
+      {/* Toast notifications */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 };
