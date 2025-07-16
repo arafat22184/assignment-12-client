@@ -10,7 +10,6 @@ const AdminTrainerRoute = ({ children }) => {
   if (loading || roleLoading) {
     return <Loading></Loading>;
   }
-  console.log(role);
   if (!user || (role !== "admin" && role !== "trainer") || role === "member") {
     return (
       <Navigate state={{ from: location.pathname }} to="/forbidden"></Navigate>
