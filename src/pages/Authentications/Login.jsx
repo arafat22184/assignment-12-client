@@ -8,6 +8,7 @@ import toastMessage from "../../utils/toastMessage";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const Login = () => {
   const { signInUser, setLocation } = useContext(AuthContext);
@@ -44,6 +45,13 @@ const Login = () => {
 
   return (
     <section className="bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-4 pt-24 pb-16">
+      <CustomHelmet
+        title="FitForge - Login"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       {/* Floating background elements */}
       <motion.div
         initial={{ opacity: 0 }}

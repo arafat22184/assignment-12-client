@@ -16,6 +16,7 @@ import Loading from "../../Shared/Loading";
 import ConfirmationModal from "../../components/ConfirmationModal";
 import useAuth from "../../Hooks/useAuth";
 import toastMessage from "../../utils/toastMessage";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const ManageSlots = () => {
   const axiosSecure = useAxiosSecure();
@@ -99,6 +100,13 @@ const ManageSlots = () => {
   if (isError) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-8 text-center">
+        <CustomHelmet
+          title="FitForge - Manage Slots"
+          meta={[
+            { name: "description", content: "Learn more about our website." },
+            { property: "og:title", content: "About Us - My Website" },
+          ]}
+        />
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

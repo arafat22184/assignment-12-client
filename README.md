@@ -1,7 +1,9 @@
 # FitForge
+
 ![Project Banner](https://i.ibb.co/7tYM1mdF/image.png)
 
 ## Table of Contents
+
 1. [About the Project](#about-the-project)
 2. [Live Demo](#live-demo)
 3. [Admin Credentials](#admin-credentials)
@@ -16,33 +18,43 @@
 ---
 
 ## About the Project
+
 FitForge is a MERN-stack Fitness Tracker platform designed to help users track workouts, set goals, and engage with a vibrant community. It supports Admin, Trainer, and Member roles with role-based access, secure authentication, and seamless CRUD operations powered by React, Node.js, Express, MongoDB, and Stripe.
 
 ## Live Demo
-[View the live site](https://your-live-site-url.com)
 
+[View the live site](https://job-finder-891d0.web.app/)
+
+## Admin Credentials
+
+- **Username:** admin@admin.com
+- **Password:** 123456aA@
 
 ## Technologies Used
+
 **Frontend**
-- React 19, React Router v7  
-- Tailwind CSS + @tailwindcss/vite  
-- Framer Motion, Lottie React  
-- TanStack React Query  
-- React Hook Form, React Select, React Datepicker  
-- Axios, SweetAlert2, React Toastify  
-- Stripe Elements (@stripe/react-stripe-js, @stripe/stripe-js)  
-- Recharts, React Icons, Heroicons  
+
+- React 19, React Router v7
+- Tailwind CSS + @tailwindcss/vite
+- Framer Motion, Lottie React
+- TanStack React Query
+- React Hook Form, React Select, React Datepicker
+- Axios, SweetAlert2, React Toastify
+- Stripe Elements (@stripe/react-stripe-js, @stripe/stripe-js)
+- Recharts, React Icons, Heroicons
 
 **Backend**
-- Node.js, Express  
-- MongoDB, Mongoose  
-- JSON Web Tokens (JWT)  
-- Cloudinary (file uploads)  
-- Multer, multer-storage-cloudinary, streamifier  
-- Stripe SDK  
+
+- Node.js, Express
+- MongoDB, Mongoose
+- JSON Web Tokens (JWT)
+- Cloudinary (file uploads)
+- Multer, multer-storage-cloudinary, streamifier
+- Stripe SDK
 - CORS, dotenv
 
 ## Installation & Setup
+
 1. **Clone the repository**
    ```bash
    git clone https://github.com/yourusername/fitforge.git
@@ -50,6 +62,7 @@ FitForge is a MERN-stack Fitness Tracker platform designed to help users track w
    ```
 2. **Setup Environment Variables**  
    Create a `.env` file in both `client` and `server` directories with the following:
+
    ```bash
    # Client .env
    VITE_FIREBASE_API_KEY=your_api_key
@@ -65,7 +78,9 @@ FitForge is a MERN-stack Fitness Tracker platform designed to help users track w
    CLOUDINARY_API_SECRET=your_api_secret
    STRIPE_SECRET_KEY=your_stripe_secret_key
    ```
+
 3. **Install dependencies**
+
    ```bash
    # Frontend
    cd client
@@ -75,7 +90,9 @@ FitForge is a MERN-stack Fitness Tracker platform designed to help users track w
    cd ../server
    npm install
    ```
+
 4. **Run the application**
+
    ```bash
    # Frontend (Vite)
    cd client
@@ -87,6 +104,7 @@ FitForge is a MERN-stack Fitness Tracker platform designed to help users track w
    ```
 
 ## Features
+
 - **Role-Based Authentication & Authorization**: JWT-based login for Admin, Trainer, and Member roles.
 - **Responsive Design**: Fully optimized for mobile, tablet, and desktop.
 - **Secure Routes**: Private/protected routes with 401/403 error handling.
@@ -99,6 +117,7 @@ FitForge is a MERN-stack Fitness Tracker platform designed to help users track w
 - **Newsletter Subscription**: Public subscription form saving to database without login.
 
 ## Project Structure
+
 ```
 fitforge/
 ├── client/           # React front-end (Vite)
@@ -121,19 +140,25 @@ fitforge/
 ```
 
 ## Environment Variables
+
 Store sensitive keys in `.env` (client and server root):
+
 - `VITE_FIREBASE_*`
 - `MONGODB_URI`, `JWT_SECRET`
 - `CLOUDINARY_*`, `STRIPE_SECRET_KEY`
 
 ## Available Scripts
+
 **Client**
+
 - `npm run dev` — start Vite development server
 - `npm run build` — build production bundle
 
 **Server**
+
 - `npm run start` — run server in development
 - `npm run start:prod` — run server in production mode
 
 ## License
+
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

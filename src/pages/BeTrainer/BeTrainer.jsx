@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Loading from "../../Shared/Loading";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const skillOptions = [
   "strength",
@@ -224,6 +225,13 @@ const BeTrainer = () => {
     const application = userData.trainerApplication;
     return (
       <div className="pt-24 px-4 pb-4">
+        <CustomHelmet
+          title="FitForge - Be a trainer"
+          meta={[
+            { name: "description", content: "Learn more about our website." },
+            { property: "og:title", content: "About Us - My Website" },
+          ]}
+        />
         <div className="max-w-3xl mx-auto p-6 bg-gray-800 rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold text-lime-400 mb-4">
             Trainer Application Status

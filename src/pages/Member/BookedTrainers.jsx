@@ -21,6 +21,7 @@ import useAuth from "../../Hooks/useAuth";
 import BookedTrainerCard from "../../components/BookedTrainerCard";
 import ReviewModal from "../../components/ReviewModal";
 import toastMessage from "../../utils/toastMessage";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const BookedTrainers = () => {
   const axiosSecure = useAxiosSecure();
@@ -138,6 +139,13 @@ const BookedTrainers = () => {
 
   return (
     <div className="rounded-xl mx-auto px-4 py-8 bg-gray-900">
+      <CustomHelmet
+        title="FitForge - Booked Trainers"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       {/* Header */}
       <div className="text-center mb-12 pt-6">
         <motion.h1

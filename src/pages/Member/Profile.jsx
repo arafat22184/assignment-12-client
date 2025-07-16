@@ -16,6 +16,7 @@ import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const Profile = () => {
   const { user, updateUser } = useAuth();
@@ -172,6 +173,13 @@ const Profile = () => {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
+      <CustomHelmet
+        title="FitForge - Profile"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: -20 }}

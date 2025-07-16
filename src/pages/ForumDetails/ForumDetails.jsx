@@ -15,6 +15,7 @@ import useAuth from "../../Hooks/useAuth";
 import toastMessage from "../../utils/toastMessage";
 import Loading from "../../Shared/Loading";
 import { formatDistanceToNow } from "date-fns";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const ForumDetails = () => {
   const { id } = useParams();
@@ -94,6 +95,13 @@ const ForumDetails = () => {
       transition={{ duration: 0.5 }}
       className="max-w-4xl mx-auto px-4 pb-12 pt-24"
     >
+      <CustomHelmet
+        title="FitForge - Forum Details"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       {/* Back Button */}
       <motion.button
         onClick={() => navigate(-1)}

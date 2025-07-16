@@ -29,6 +29,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Loading from "../../Shared/Loading";
 import { fadeIn, staggerContainer } from "../../utils/motion";
 import toastMessage from "../../utils/toastMessage";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const COLORS = {
   primary: "#a3e635",
@@ -117,6 +118,13 @@ const Balance = () => {
       animate="show"
       className="min-h-screen rounded-xl pb-12 pt-24 px-4 bg-gray-900"
     >
+      <CustomHelmet
+        title="FitForge - Financial Dashboard"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       <div className=" max-w-7xl mx-auto">
         {/* Header */}
         <motion.div

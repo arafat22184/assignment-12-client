@@ -8,6 +8,7 @@ import Loading from "../../Shared/Loading";
 import ClassCard from "../../components/ClassCard";
 import NoClass from "../../components/NoClass";
 import { motion, AnimatePresence } from "framer-motion";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 // Simplified animation variants
 const containerVariants = {
@@ -171,6 +172,13 @@ const AllClasses = () => {
 
   return (
     <div className="max-w-7xl mx-auto pt-24 px-4 pb-12">
+      <CustomHelmet
+        title="FitForge - Classes"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

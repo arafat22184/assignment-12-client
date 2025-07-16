@@ -18,6 +18,7 @@ import {
   MdSchedule,
 } from "react-icons/md";
 import { FaUserTie } from "react-icons/fa";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 // Available time slots
 const timeSlotOptions = [
@@ -229,6 +230,13 @@ const AddSlot = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
+      <CustomHelmet
+        title="FitForge - Add Slot"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       <div className="mb-10 flex flex-col items-center">
         <div className="flex items-center gap-3 mb-2">
           <MdSchedule className="text-3xl text-lime-400" />

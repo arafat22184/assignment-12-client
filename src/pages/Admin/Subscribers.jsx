@@ -4,6 +4,7 @@ import Loading from "../../Shared/Loading";
 import { FiMail, FiUser, FiClock } from "react-icons/fi";
 import { FaRegChartBar } from "react-icons/fa";
 import { MdOutlineFitnessCenter } from "react-icons/md";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const Subscribers = () => {
   const axiosSecure = useAxiosSecure();
@@ -39,6 +40,13 @@ const Subscribers = () => {
 
   return (
     <div className="p-6 bg-gray-900 rounded-xl border border-gray-800 shadow-lg">
+      <CustomHelmet
+        title="FitForge - Subscribers"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <div>

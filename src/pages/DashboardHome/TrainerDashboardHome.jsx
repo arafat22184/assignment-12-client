@@ -28,6 +28,7 @@ import StatCard from "../../components/StatCard";
 import { motion } from "framer-motion";
 import { IoIosArrowForward } from "react-icons/io";
 import useAuth from "../../Hooks/useAuth";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 // Animation variants
 const containerVariants = {
@@ -148,6 +149,13 @@ const TrainerDashboardHome = () => {
       variants={containerVariants}
       className="p-4 sm:p-6 bg-gray-900 rounded-xl space-y-6"
     >
+      <CustomHelmet
+        title="FitForge - Trainer Dashboard"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       {/* Header */}
       <motion.div
         variants={itemVariants}

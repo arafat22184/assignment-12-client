@@ -20,6 +20,7 @@ import {
   MdDateRange,
 } from "react-icons/md";
 import { GiWeightLiftingUp, GiMuscleUp } from "react-icons/gi";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const fallbackAvatar = "https://i.ibb.co/4pDNDk1/avatar.png";
 
@@ -105,6 +106,13 @@ const TrainerApplicationDetail = () => {
 
   return (
     <div className="p-4 sm:p-6 bg-gray-900 rounded-xl border border-gray-800 shadow-lg">
+      <CustomHelmet
+        title="FitForge - Applied Trainer Details"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
         <div>

@@ -15,6 +15,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import GoogleLoginBtn from "../../Shared/GoogleLoginBtn";
 import GithubLoginBtn from "../../Shared/GithubLoginBtn";
 import toastMessage from "../../utils/toastMessage";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const Register = () => {
   const { createUser, updateUser, location, setUser } = useContext(AuthContext);
@@ -84,6 +85,13 @@ const Register = () => {
 
   return (
     <section className="bg-gradient-to-br from-gray-900 to-black flex items-center justify-center p-4 pt-24 pb-16">
+      <CustomHelmet
+        title="FitForge - Register"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       {/* Background Blur Elements */}
       <motion.div
         initial={{ opacity: 0 }}

@@ -7,6 +7,7 @@ import Loading from "../../Shared/Loading";
 import ForumPagination from "./ForumPagination";
 import ForumCard from "./ForumCard";
 import { motion } from "framer-motion";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const AllForums = () => {
   const { user } = useAuth();
@@ -38,6 +39,13 @@ const AllForums = () => {
 
   return (
     <div className="max-w-7xl mx-auto pt-24 px-4 pb-12">
+      <CustomHelmet
+        title="FitForge - Community"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}

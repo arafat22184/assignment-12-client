@@ -22,6 +22,7 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import toastMessage from "../../utils/toastMessage";
 import Select from "react-select";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const AddClass = () => {
   const { user } = useAuth();
@@ -227,6 +228,13 @@ const AddClass = () => {
 
   return (
     <div className="p-4 sm:p-6 bg-gray-900 rounded-xl border border-gray-800 shadow-lg max-w-3xl mx-auto">
+      <CustomHelmet
+        title="FitForge - Add Class"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       <div className="mb-8">
         <div className="flex items-center gap-3">
           <GiWeightLiftingUp className="text-3xl text-lime-400" />

@@ -2,10 +2,18 @@
 import { Link } from "react-router";
 import { FaArrowLeft } from "react-icons/fa";
 import { motion } from "framer-motion";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const Forbidden = () => {
   return (
     <div className="bg-black min-h-svh w-full flex flex-col justify-center items-center relative overflow-hidden">
+      <CustomHelmet
+        title="FitForge - Forbidden"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       {/* Forbidden video */}
       <div className="w-full max-w-4xl">
         <video

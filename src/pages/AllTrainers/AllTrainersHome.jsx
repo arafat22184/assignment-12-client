@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router";
 import { motion } from "framer-motion";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const AllTrainersHome = () => {
   const axiosSecure = useAxiosSecure();
@@ -40,6 +41,13 @@ const AllTrainersHome = () => {
 
   return (
     <div className="pt-24 px-4 pb-12">
+      <CustomHelmet
+        title="FitForge - Trainers"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-lime-400 mb-2">

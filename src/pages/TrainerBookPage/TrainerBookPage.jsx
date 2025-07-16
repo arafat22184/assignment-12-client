@@ -17,6 +17,7 @@ import { fadeIn, staggerContainer, slideIn, zoomIn } from "../../utils/motion";
 import useAuth from "../../Hooks/useAuth";
 import toastMessage from "../../utils/toastMessage";
 import useUserRole from "../../Hooks/useUserRole";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const TrainerBookPage = () => {
   const location = useLocation();
@@ -113,6 +114,13 @@ const TrainerBookPage = () => {
         exit={{ opacity: 0 }}
         className="pt-24 pb-16 flex items-center justify-center"
       >
+        <CustomHelmet
+          title="FitForge - Book Trainer"
+          meta={[
+            { name: "description", content: "Learn more about our website." },
+            { property: "og:title", content: "About Us - My Website" },
+          ]}
+        />
         <motion.div
           variants={zoomIn(0.2, 1)}
           initial="hidden"

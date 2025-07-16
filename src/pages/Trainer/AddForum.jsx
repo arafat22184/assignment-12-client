@@ -7,6 +7,7 @@ import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Loading from "../../Shared/Loading";
 import toastMessage from "../../utils/toastMessage";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const AddForum = () => {
   const { user } = useAuth();
@@ -127,6 +128,13 @@ const AddForum = () => {
 
   return (
     <div className="p-4 sm:p-6 bg-gray-900 rounded-xl border border-gray-800 shadow-lg max-w-3xl mx-auto">
+      <CustomHelmet
+        title="FitForge - Add Forum"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       <div className="mb-8">
         <div className="flex items-center gap-3">
           <FaEdit className="text-3xl text-blue-400" />

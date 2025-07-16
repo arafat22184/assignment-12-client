@@ -2,10 +2,18 @@ import erroranimation from "../assets/404Error.json";
 import Lottie from "lottie-react";
 import { Link } from "react-router";
 import { FaArrowLeft } from "react-icons/fa";
+import CustomHelmet from "./CustomHelmet";
 
 const Error = () => {
   return (
     <div className="bg-slate-950 min-h-svh flex justify-center items-center">
+      <CustomHelmet
+        title="FitForge - Error"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col justify-center items-center">
           <div>

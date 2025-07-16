@@ -18,6 +18,7 @@ import { format } from "date-fns";
 import Modal from "../../components/Modal";
 import useAuth from "../../Hooks/useAuth";
 import { motion } from "framer-motion";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const ActivityLog = () => {
   const axiosSecure = useAxiosSecure();
@@ -60,6 +61,13 @@ const ActivityLog = () => {
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
+      <CustomHelmet
+        title="FitForge - Activity Log"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       <div className="max-w-4xl mx-auto">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}

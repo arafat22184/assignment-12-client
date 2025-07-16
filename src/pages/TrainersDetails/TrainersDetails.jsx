@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import Loading from "../../Shared/Loading";
 import BecomeTrainerCTA from "../../components/BecomeTrainerCTA";
+import CustomHelmet from "../../Shared/CustomHelmet";
 
 const TrainersDetails = () => {
   const { id } = useParams();
@@ -32,6 +33,13 @@ const TrainersDetails = () => {
 
   return (
     <div className="pt-24 pb-16 px-4">
+      <CustomHelmet
+        title="FitForge - Trainer Details"
+        meta={[
+          { name: "description", content: "Learn more about our website." },
+          { property: "og:title", content: "About Us - My Website" },
+        ]}
+      />
       <div className="max-w-6xl mx-auto">
         <BecomeTrainerCTA />
 
