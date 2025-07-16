@@ -30,6 +30,8 @@ import BookedTrainers from "../pages/Member/BookedTrainers";
 import AdminTrainerRoute from "../routes/AdminTrainerRoute";
 import AllForums from "../pages/AllForums/AllForums";
 import ForumDetails from "../pages/ForumDetails/ForumDetails";
+import Error from "../Shared/Error";
+import Forbidden from "../pages/Forbidden/Forbidden";
 
 const router = createBrowserRouter([
   {
@@ -217,6 +219,14 @@ const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "forbidden",
+    Component: Forbidden,
+  },
+  {
+    path: "*",
+    element: <Error />,
   },
 ]);
 
