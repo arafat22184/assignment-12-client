@@ -9,12 +9,12 @@ const axiosInstance = axios.create({
 });
 
 const useAxiosSecure = () => {
-  const { user, logOut } = use(AuthContext);
+  const { user, logOut, loading } = use(AuthContext);
   const navigate = useNavigate();
   axiosInstance.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
 
-    if (token) {
+    if (!loading && token && user.email) {
       config.headers.authorization = `Bearer ${token}`;
       config.headers.email = user?.email;
     }
