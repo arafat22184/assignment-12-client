@@ -71,13 +71,14 @@ const DashboardLayout = () => {
       label: "Add Slot",
       icon: <FiPlusCircle />,
     },
+  ];
+  const sharedLinks = [
     {
       to: "/dashboard/addForum",
       label: "Add Forum",
       icon: <FiMessageSquare />,
     },
   ];
-
   const memberLinks = [
     {
       to: "/dashboard/activityLog",
@@ -108,6 +109,8 @@ const DashboardLayout = () => {
     ...(!roleLoading && role === "trainer" ? trainerLinks : []),
 
     ...(!roleLoading && role === "member" ? memberLinks : []),
+
+    ...(!roleLoading && role !== "member" ? sharedLinks : []),
   ];
 
   const currentPageTitle =

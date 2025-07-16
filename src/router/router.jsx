@@ -27,6 +27,7 @@ import ActivityLog from "../pages/Member/ActivityLog";
 import MemberRoute from "../routes/MemberRoute";
 import Profile from "../pages/Member/Profile";
 import BookedTrainers from "../pages/Member/BookedTrainers";
+import AdminTrainerRoute from "../routes/AdminTrainerRoute";
 
 const router = createBrowserRouter([
   {
@@ -166,14 +167,6 @@ const router = createBrowserRouter([
           </TrainerRoute>
         ),
       },
-      {
-        path: "addForum",
-        element: (
-          <TrainerRoute>
-            <AddForum></AddForum>
-          </TrainerRoute>
-        ),
-      },
       // Member Routes
       {
         path: "activityLog",
@@ -197,6 +190,16 @@ const router = createBrowserRouter([
           <MemberRoute>
             <Profile></Profile>
           </MemberRoute>
+        ),
+      },
+
+      // Shared Route
+      {
+        path: "addForum",
+        element: (
+          <AdminTrainerRoute>
+            <AddForum></AddForum>
+          </AdminTrainerRoute>
         ),
       },
     ],
