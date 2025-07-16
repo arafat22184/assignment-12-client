@@ -12,9 +12,11 @@ const useAxiosSecure = () => {
   const { user, logOut } = use(AuthContext);
   const navigate = useNavigate();
   axiosInstance.interceptors.request.use((config) => {
-    if (user?.accessToken) {
-      config.headers.authorization = `Bearer ${user.accessToken}`;
-      config.headers.email = user.email;
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      config.headers.authorization = `Bearer ${token}`;
+      config.headers.email = user?.email;
     }
     return config;
   });
@@ -25,10 +27,11 @@ const useAxiosSecure = () => {
       return response;
     },
     (error) => {
-      if (error.status === 401 || error.status === 403) {
+      if (error.response?.status === 401 || error.response?.status === 403) {
         logOut();
         navigate("/login")
           .then(() => {
+            localStorage.removeItem("token");
             toastMessage("Please sign in again", "error");
           })
           .catch((err) => {

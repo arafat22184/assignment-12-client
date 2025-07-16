@@ -11,6 +11,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { app } from "../Firebase/firebase.config";
+import axios from "axios";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
@@ -21,7 +22,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [location, setLocation] = useState("");
-
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -32,6 +32,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
+    localStorage.removeItem("token");
     return signOut(auth);
   };
 
@@ -53,6 +54,21 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+
+      if (currentUser?.email) {
+        const userData = { email: currentUser.email };
+
+        axios
+          .post(`${import.meta.env.VITE_API_LINK}/jwt`, userData)
+          .then((res) => {
+            const token = res.data.token;
+            localStorage.setItem("token", token);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
       setLoading(false);
     });
 
