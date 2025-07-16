@@ -116,8 +116,8 @@ const AllTrainersHome = () => {
 
                 {/* Specializations */}
                 {trainer.trainerApplication?.skills?.length > 0 && (
-                  <div className="mb-3 flex items-center">
-                    <FaDumbbell className="text-lime-400 mr-2 text-sm" />
+                  <div className="mb-3 flex items-center gap-3">
+                    <FaDumbbell className="text-lime-400 text-sm" />
                     <p className="text-gray-400 text-sm truncate">
                       {trainer.trainerApplication.skills.slice(0, 3).join(", ")}
                       {trainer.trainerApplication.skills.length > 3
@@ -128,21 +128,17 @@ const AllTrainersHome = () => {
                 )}
 
                 {/* Availability */}
-                <div className="flex items-center gap-2 text-gray-400 text-sm mb-4">
+                <div className="flex items-center gap-3 text-gray-400 text-sm mb-4">
                   <FaCalendarAlt className="text-lime-400" />
                   <div>
-                    <p className="text-white">
+                    <p className="text-white text-xs">
                       {trainer.trainerApplication?.slots
-                        .map((slot) => slot.day)
+                        ?.slice(0, 1)
+                        .map((slot) => `${slot.day} (${slot.time})`)
                         .join(", ")}
-                      {trainer.trainerApplication?.availableDays?.length > 2
+                      {trainer.trainerApplication?.slots?.length > 3
                         ? "..."
                         : ""}
-                    </p>
-                    <p className="text-gray-400 text-xs">
-                      {trainer.trainerApplication?.slots
-                        ?.map((slot) => slot.time)
-                        .join(", ")}
                     </p>
                   </div>
                 </div>

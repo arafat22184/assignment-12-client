@@ -7,7 +7,6 @@ import {
   FaRegClock,
   FaUserTie,
   FaChalkboardTeacher,
-  FaCertificate,
 } from "react-icons/fa";
 import { MdEmail, MdDateRange } from "react-icons/md";
 import { GiWeightLiftingUp } from "react-icons/gi";
@@ -18,7 +17,8 @@ import Swal from "sweetalert2";
 import { format, formatDistanceToNow } from "date-fns";
 import toastMessage from "../../utils/toastMessage";
 
-const fallbackAvatar = "https://i.ibb.co/4pDNDk1/avatar.png"; // Fallback image
+const fallbackAvatar =
+  "https://i.ibb.co/pjw0kYsj/1648123179044-Profile-Avatar.png";
 
 const AllTrainers = () => {
   const axiosSecure = useAxiosSecure();
