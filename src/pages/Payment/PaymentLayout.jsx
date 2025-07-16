@@ -14,8 +14,6 @@ const PaymentLayout = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  console.log(id);
-
   const { data: bookingDetails = {}, isLoading: bookingDataLoading } = useQuery(
     {
       queryKey: ["paymentData", id],
