@@ -127,7 +127,7 @@ const ForumCard = ({ forum, user, queryClient, page }) => {
         >
           {forum.forumTitle}
         </motion.h3>
-        <p className="text-gray-300 mb-4 line-clamp-3">
+        <p className="text-gray-300 mb-4 line-clamp-2">
           {forum.forumDescription}
         </p>
       </div>

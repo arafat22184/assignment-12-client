@@ -29,6 +29,7 @@ import Profile from "../pages/Member/Profile";
 import BookedTrainers from "../pages/Member/BookedTrainers";
 import AdminTrainerRoute from "../routes/AdminTrainerRoute";
 import AllForums from "../pages/AllForums/AllForums";
+import ForumDetails from "../pages/ForumDetails/ForumDetails";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <PaymentLayout />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/forums/:id",
+        element: (
+          <PrivateRoute>
+            <ForumDetails></ForumDetails>
           </PrivateRoute>
         ),
       },
