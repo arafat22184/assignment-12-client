@@ -35,7 +35,7 @@ const ClassCard = ({ classItem }) => {
     : "None required";
 
   return (
-    <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-full flex flex-col">
+    <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-full flex flex-col border border-gray-700">
       {/* Class Image */}
       <img
         src={classItem.imageUrl}
