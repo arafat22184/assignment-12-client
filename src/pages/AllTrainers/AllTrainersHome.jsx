@@ -39,7 +39,7 @@ const AllTrainersHome = () => {
   }
 
   return (
-    <div className="pt-24 px-4 pb-12 bg-gray-950">
+    <div className="pt-24 px-4 pb-12">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-lime-400 mb-2">

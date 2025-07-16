@@ -105,7 +105,7 @@ const ClassCard = ({ classItem }) => {
 
           {trainersLoading ? (
             <div className="flex justify-center">
-              <Loading small />
+              <p className="text-gray-400">Trainer is loading...</p>
             </div>
           ) : trainersError ? (
             <p className="text-red-400 text-sm">Error loading trainers</p>
