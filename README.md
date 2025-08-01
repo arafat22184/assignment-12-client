@@ -23,7 +23,7 @@ FitForge is a MERN-stack Fitness Tracker platform designed to help users track w
 
 ## Live Demo
 
-[View the live site](https://job-finder-891d0.web.app/)
+[View the live site](https://fitforge-8d026.web.app/)
 
 ## Admin Credentials
 
@@ -57,8 +57,8 @@ FitForge is a MERN-stack Fitness Tracker platform designed to help users track w
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/fitforge.git
-   cd fitforge
+   git clone https://github.com/arafat22184/assignment-12-client.git
+   cd assignment-12-client-main
    ```
 2. **Setup Environment Variables**  
    Create a `.env` file in both `client` and `server` directories with the following:
@@ -85,10 +85,6 @@ FitForge is a MERN-stack Fitness Tracker platform designed to help users track w
    # Frontend
    cd client
    npm install
-
-   # Backend
-   cd ../server
-   npm install
    ```
 
 4. **Run the application**
@@ -97,10 +93,6 @@ FitForge is a MERN-stack Fitness Tracker platform designed to help users track w
    # Frontend (Vite)
    cd client
    npm run dev
-
-   # Backend
-   cd server
-   npm run start
    ```
 
 ## Features
@@ -125,23 +117,24 @@ fitforge/
 │   ├── src/
 │   │   ├── assets/
 │   │   ├── components/
+│   │   ├── Firebase/
+│   │   ├── Hooks/
 │   │   ├── layouts/
 │   │   ├── pages/
-│   │   └── App.jsx
+│   │   ├── Provider/
+│   │   ├── router/
+│   │   ├── routes/
+│   │   ├── Shared/
+│   │   ├── utils/
+│   │   ├── index.css/
+│   │   ├── main.jsx/
 │   └── vite.config.js
-├── server/           # Express back-end
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   ├── utils/
-│   └── server.js
 └── README.md
 ```
 
 ## Environment Variables
 
-Store sensitive keys in `.env` (client and server root):
+Store sensitive keys in `.env.local` (client root):
 
 - `VITE_FIREBASE_*`
 - `MONGODB_URI`, `JWT_SECRET`
@@ -153,11 +146,6 @@ Store sensitive keys in `.env` (client and server root):
 
 - `npm run dev` — start Vite development server
 - `npm run build` — build production bundle
-
-**Server**
-
-- `npm run start` — run server in development
-- `npm run start:prod` — run server in production mode
 
 ## License
 
