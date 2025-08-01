@@ -58,7 +58,7 @@ FitForge is a MERN-stack Fitness Tracker platform designed to help users track w
 1. **Clone the repository**
    ```bash
    git clone https://github.com/arafat22184/assignment-12-client.git
-   cd assignment-12-client-main
+   cd assignment-12-client
    ```
 2. **Setup Environment Variables**  
    Create a `.env` file in both `client` and `server` directories with the following:
