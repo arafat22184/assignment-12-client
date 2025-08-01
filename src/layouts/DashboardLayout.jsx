@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { NavLink, Outlet, useLocation, Link } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { AuthContext } from "../Provider/AuthProvider";
@@ -22,15 +22,18 @@ import {
   FiUserCheck,
 } from "react-icons/fi";
 import { RiDashboardLine } from "react-icons/ri";
-import useUserRole from "../Hooks/useUserRole";
 import toastMessage from "../utils/toastMessage";
 import { ToastContainer } from "react-toastify";
 
+import useUserRole from "../Hooks/useUserRole";
+
 const DashboardLayout = () => {
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext);
-  const { roleLoading, role } = useUserRole();
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
   const location = useLocation();
+
+  const { role, roleLoading } = useUserRole();
 
   const adminLinks = [
     {
@@ -110,7 +113,9 @@ const DashboardLayout = () => {
 
     ...(!roleLoading && role === "member" ? memberLinks : []),
 
-    ...(!roleLoading && role !== "member" ? sharedLinks : []),
+    ...(!roleLoading && (role === "admin" || role === "trainer")
+      ? sharedLinks
+      : []),
   ];
 
   const currentPageTitle =

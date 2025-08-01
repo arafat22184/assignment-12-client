@@ -52,12 +52,12 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-
       if (currentUser?.email) {
         const userData = { email: currentUser.email };
-
+        setUser(currentUser);
+        setLoading(false);
         axios
           .post(`${import.meta.env.VITE_API_LINK}/jwt`, userData)
           .then((res) => {
@@ -67,15 +67,16 @@ const AuthProvider = ({ children }) => {
           .catch((error) => {
             console.log(error);
           });
+      } else {
+        setUser(null);
+        setLoading(false);
       }
-
-      setLoading(false);
     });
 
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [user?.email]);
 
   const authData = {
     createUser,
@@ -91,7 +92,9 @@ const AuthProvider = ({ children }) => {
     location,
     setLocation,
   };
-  return <AuthContext value={authData}>{children}</AuthContext>;
+  return (
+    <AuthContext.Provider value={authData}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;

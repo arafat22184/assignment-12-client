@@ -1,5 +1,5 @@
 import axios from "axios";
-import { use } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../Provider/AuthProvider";
 import toastMessage from "../utils/toastMessage";
@@ -9,12 +9,12 @@ const axiosInstance = axios.create({
 });
 
 const useAxiosSecure = () => {
-  const { user, logOut, loading } = use(AuthContext);
+  const { user, logOut, loading } = useContext(AuthContext);
   const navigate = useNavigate();
   axiosInstance.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");
 
-    if (!loading && token && user.email) {
+    if (!loading && token && user?.email) {
       config.headers.authorization = `Bearer ${token}`;
       config.headers.email = user?.email;
     }

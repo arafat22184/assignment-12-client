@@ -11,7 +11,7 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import CustomHelmet from "../../Shared/CustomHelmet";
 
 const Login = () => {
-  const { signInUser, setLocation } = useContext(AuthContext);
+  const { signInUser, setLocation, setLoading } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,11 +34,13 @@ const Login = () => {
         axiosSecure
           .patch(`/users/${loggedInUser.email}`, lastLoginUpdate)
           .then(() => {
+            setLoading(false);
             navigate(location.state ? location.state : "/");
             toastMessage("Logged in successfully!", "success");
           });
       })
       .catch((err) => {
+        setLoading(false);
         err && toastMessage("Login failed. Please try again later.", "error");
       });
   };
