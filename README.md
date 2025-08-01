@@ -61,29 +61,20 @@ FitForge is a MERN-stack Fitness Tracker platform designed to help users track w
    cd assignment-12-client
    ```
 2. **Setup Environment Variables**  
-   Create a `.env` file in both `client` and `server` directories with the following:
+   Create a `.env.local` file in `root` directories with the following:
 
    ```bash
-   # Client .env
+   # Client .env.local
    VITE_FIREBASE_API_KEY=your_api_key
    VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
    VITE_FIREBASE_PROJECT_ID=your_project_id
    VITE_FIREBASE_STORAGE_BUCKET=your_bucket
-
-   # Server .env
-   MONGODB_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
-   CLOUDINARY_CLOUD_NAME=your_cloud_name
-   CLOUDINARY_API_KEY=your_api_key
-   CLOUDINARY_API_SECRET=your_api_secret
-   STRIPE_SECRET_KEY=your_stripe_secret_key
    ```
 
 3. **Install dependencies**
 
    ```bash
    # Frontend
-   cd client
    npm install
    ```
 
@@ -91,7 +82,6 @@ FitForge is a MERN-stack Fitness Tracker platform designed to help users track w
 
    ```bash
    # Frontend (Vite)
-   cd client
    npm run dev
    ```
 
